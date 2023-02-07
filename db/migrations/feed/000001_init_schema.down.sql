@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS sentiment_scores;
+DROP TABLE IF EXISTS models;
+DROP TABLE IF EXISTS documents;

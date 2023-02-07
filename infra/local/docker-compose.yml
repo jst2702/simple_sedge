@@ -1,0 +1,17 @@
+version: "2"
+
+services:
+  postgresql:
+    image: docker.io/postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_DB=simplesedge
+      - POSTGRES_PASSWORD=secret
+
+volumes:
+  postgres_data:
+    driver: local
