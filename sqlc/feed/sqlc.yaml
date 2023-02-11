@@ -6,8 +6,8 @@ sql:
     gen:
       go:
         # sql_package: pgx/v4
-        package: "data"
-        out: "../../feed/pkg/gen/data"
+        package: "db"
+        out: "../../feed/pkg/db"
         emit_json_tags: true
         emit_prepared_queries: false
         emit_interface: false
