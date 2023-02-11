@@ -3,7 +3,7 @@
 //   sqlc v1.16.0
 // source: sentiment_scores.sql
 
-package data
+package db
 
 import (
 	"context"

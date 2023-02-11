@@ -1,10 +1,11 @@
-package data
+package db
 
 import (
 	"database/sql"
-	"log"
 	"os"
 	"testing"
+
+	kitsql "simplesedge.com/gokit/sql"
 )
 
 const (
@@ -13,13 +14,10 @@ const (
 )
 
 var testQueries *Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(dbDriver, dbSource)
-	if err != nil {
-		log.Fatal("cannot connect to db.", err)
-	}
-
-	testQueries = New(conn)
+	testDB = kitsql.GetDB(dbDriver, dbSource)
+	testQueries = New(testDB)
 	os.Exit(m.Run())
 }

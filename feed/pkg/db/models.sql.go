@@ -3,7 +3,7 @@
 //   sqlc v1.16.0
 // source: models.sql
 
-package data
+package db
 
 import (
 	"context"
