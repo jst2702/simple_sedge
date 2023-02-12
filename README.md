@@ -5,9 +5,9 @@ Simple (production) app for stock market edge.
 
 ## Design and layout
 * `gokit`: The module for template go code, primarily for setting up a server.
-* `feed-api`: Currently the only go server and the primary backend of the `feed` service.
-* `feed-lambda`: Data collection and ml services for `feed`, served as lambda functions.
-* `feed-web` The web app for the `feed` service.
+* `feed/api`: Currently the only go server and the primary backend of the `feed` service.
+* `feed/lambda`: Data collection and ml services for `feed`, served as lambda functions.
+* `feed/web` The web app for the `feed` service.
 * `proto` All proto files go here. All communication between internal services use gRPC, though gateway api is also made available.
 * `sqlc` All sqlc files go here. Only the go servers directly communicate with the database.
 
