@@ -1,0 +1,1 @@
+from .NewsDoc import NewsDoc

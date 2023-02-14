@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "news-scraping"
+version = "0.1.0"
+description = ""
+authors = ["jst2702 <jst2702@vt.edu>"]
+readme = "README.md"
+packages = [{include = "news_scraping"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+bs4 = "^0.0.1"
+requests = "^2.28.2"
+selenium = "^4.8.0"
+webdriver-manager = "^3.8.5"
+langdetect = "^1.0.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
