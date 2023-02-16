@@ -1,0 +1,1 @@
+from news_scraping.processes import scrape_rss
