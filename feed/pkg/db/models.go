@@ -41,3 +41,10 @@ type SentimentScore struct {
 	Confidence   int64     `json:"confidence"`
 	CreatedAt    time.Time `json:"created_at"`
 }
+
+type User struct {
+	Email             string    `json:"email"`
+	HashedPassword    string    `json:"hashed_password"`
+	PasswordChangedAt time.Time `json:"password_changed_at"`
+	CreatedAt         time.Time `json:"created_at"`
+}

@@ -5,19 +5,16 @@ import (
 	"os"
 	"testing"
 
+	config "simplesedge.com/feed/pkg/config"
 	kitsql "simplesedge.com/gokit/sql"
-)
-
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable"
 )
 
 var testQueries *Queries
 var testDB *sql.DB
 
 func TestMain(m *testing.M) {
-	testDB = kitsql.GetDB(dbDriver, dbSource)
+	cfg := config.DefaultConfig("../../")
+	testDB = kitsql.GetDB(cfg.DBDriver, cfg.DBSource)
 	testQueries = New(testDB)
 	os.Exit(m.Run())
 }
