@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 	"simplesedge.com/feed/pkg/db"
+	"simplesedge.com/gokit/util"
 )
 
 type createUserRequest struct {
@@ -29,9 +30,15 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
+	hashedPassword, err := util.HashPassword(util.RandomString(6))
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
 	arg := db.CreateUserParams{
 		Email:          req.Email,
-		HashedPassword: req.Password,
+		HashedPassword: hashedPassword,
 	}
 	user, err := server.store.CreateUser(ctx, arg)
 	if err != nil {
