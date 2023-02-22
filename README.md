@@ -42,3 +42,4 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * PostgreSQL for relational database (prefer it over MySQL)
 * .. for db mock testing
 * `viper` for using config files.
+* `gomock` for db mocking

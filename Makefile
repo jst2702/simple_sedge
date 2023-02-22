@@ -27,4 +27,8 @@ sqlc:
 test:
 	go test -v -cover ./feed/...
 
-.PHONY: local-up local-down sqlc server
+mock:
+	cd feed && mockgen -destination pkg/db/mock/store.go -package mockdb simplesedge.com/feed/pkg/db Store
+
+.PHONY: local-up local-down sqlc server mock
+
