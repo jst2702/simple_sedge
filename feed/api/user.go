@@ -7,12 +7,19 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/gokit/util"
 )
+
+type createUserResponse struct {
+	Email             string    `json:"email"`
+	PasswordChangedAt time.Time `json:"password_changed_at"`
+	CreatedAt         time.Time `json:"created_at"`
+}
 
 type createUserRequest struct {
 	Email    string `json:"email" binding:"required,email"`
@@ -54,7 +61,12 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	rsp := createUserResponse{
+		Email:             user.Email,
+		PasswordChangedAt: user.PasswordChangedAt,
+		CreatedAt:         user.PasswordChangedAt,
+	}
+	ctx.JSON(http.StatusOK, rsp)
 }
 
 type getUserRequest struct {
