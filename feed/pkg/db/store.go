@@ -1,6 +1,7 @@
 package db
 
 import (
+	"context"
 	"database/sql"
 )
 
@@ -12,13 +13,19 @@ type RenameModelResult struct {
 	Err error `json:"error"`
 }
 
-type Store struct {
+// Using a store interface allows for easier mocking.
+type Store interface {
+	Querier
+	RenameModelTx(context.Context, RenameModelParams) RenameModelResult
+}
+
+type SQLStore struct {
 	*Queries
 	db *sql.DB
 }
 
-func NewStore(db *sql.DB) *Store {
-	return &Store{
+func NewStore(db *sql.DB) Store {
+	return &SQLStore{
 		db:      db,
 		Queries: New(db),
 	}

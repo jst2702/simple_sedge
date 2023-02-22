@@ -2,18 +2,24 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 	"simplesedge.com/feed/pkg/db"
 )
 
 // serves all HTTP requests for our feed service
 type Server struct {
-	store  *db.Store
+	store  db.Store
 	router *gin.Engine
 }
 
-func NewServer(store *db.Store) *Server {
+func NewServer(store db.Store) *Server {
 	server := &Server{store: store}
 	router := gin.Default()
+
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("password", validPassword)
+	}
 
 	router.POST("/users", server.createUser)
 	router.GET("/users/:email", server.getUser)

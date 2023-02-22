@@ -7,13 +7,13 @@ import (
 	gokitSql "simplesedge.com/gokit/sql"
 )
 
-func (store Store) RenameModelTx(
+func (store *SQLStore) RenameModelTx(
 	ctx context.Context,
 	arg RenameModelParams) RenameModelResult {
 
 	err := gokitSql.ExecTx(ctx, store.db, func(tx *sql.Tx) error {
-		var err error
-		_, err = store.UpdateModel(ctx, UpdateModelParams{
+		q := New(tx)
+		_, err := q.UpdateModel(ctx, UpdateModelParams{
 			ID: arg.ModelID, Name: "jaqapoe",
 		})
 		if err != nil {
