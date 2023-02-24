@@ -23,8 +23,9 @@ mac install: `brew install golang-migrate`
 * sqlc <br>
 https://github.com/kyleconroy/sqlc (crud code gen)<br>
 mac install: `brew install sqlc`
+* gomock for mocking https://github.com/golang/mock <br> mac install: `go install github.com/golang/mock/mockgen@v1.6.0`
 * poetry for python dependency management
-
+* reflex for easier development: <br> mac install: `go install github.com/cespare/reflex@latest`
 
 ---
 ## Production deployment
@@ -41,5 +42,6 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `gin` for standalone api (if you don't want to use RPC)
 * PostgreSQL for relational database (prefer it over MySQL)
 * .. for db mock testing
-* `viper` for using config files.
+* `viper` for using config files
 * `gomock` for db mocking
+* `paseto` for token authentication

@@ -15,9 +15,12 @@ func main() {
 	conn := kitsql.GetDB(cfg.DBDriver, cfg.DBSource)
 
 	store := db.NewStore(conn)
-	server := api.NewServer(store)
-	err := server.Start(cfg.ServerAddress)
+	server, err := api.NewServer(cfg, store)
+	if err != nil {
+		log.Fatal("cannot create server:", err)
+	}
 
+	err = server.Start(cfg.ServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server", err)
 	}

@@ -1,34 +1,51 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	config "simplesedge.com/feed/pkg/config"
 	"simplesedge.com/feed/pkg/db"
+	"simplesedge.com/gokit/token"
 )
 
 // serves all HTTP requests for our feed service
 type Server struct {
-	store  db.Store
-	router *gin.Engine
+	config     config.Config
+	store      db.Store
+	tokenMaker token.Maker
+	router     *gin.Engine
 }
 
-func NewServer(store db.Store) *Server {
-	server := &Server{store: store}
-	router := gin.Default()
+func NewServer(config *config.Config, store db.Store) (*Server, error) {
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
+	if err != nil {
+		return nil, fmt.Errorf("cannotn create a token maker: %w", err)
+	}
 
+	server := &Server{
+		config:     *config,
+		store:      store,
+		tokenMaker: tokenMaker,
+	}
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("password", validPassword)
 	}
+	server.setupRouter()
+	return server, nil
+}
 
+func (server *Server) setupRouter() {
+	router := gin.Default()
+	router.POST("/users/login", server.loginUser)
 	router.POST("/users", server.createUser)
 	router.GET("/users/:username", server.getUser)
 	router.GET("/documents/:guid", server.getDocument)
 	router.GET("/documents", server.listDocuments)
-
-	// add routes to router
 	server.router = router
-	return server
+
 }
 
 func (server *Server) Start(address string) error {
