@@ -22,7 +22,7 @@ func NewServer(store db.Store) *Server {
 	}
 
 	router.POST("/users", server.createUser)
-	router.GET("/users/:email", server.getUser)
+	router.GET("/users/:username", server.getUser)
 	router.GET("/documents/:guid", server.getDocument)
 	router.GET("/documents", server.listDocuments)
 

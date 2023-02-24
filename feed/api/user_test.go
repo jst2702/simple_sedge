@@ -17,20 +17,20 @@ import (
 	"simplesedge.com/gokit/util"
 )
 
-func TestGetUserRequest(t *testing.T) {
+func TestGetUserAPI(t *testing.T) {
 	user := randomUser()
 	testCases := []struct {
 		name          string
-		userEmail     string
+		username      string
 		buildStubs    func(store *mockdb.MockStore)
 		checkResponse func(t *testing.T, recorder *httptest.ResponseRecorder)
 	}{
 		{
-			name:      "OK",
-			userEmail: user.Email,
+			name:     "OK",
+			username: user.Username,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
-					GetUser(gomock.Any(), gomock.Eq(user.Email)).
+					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
 					Return(user, nil)
 			},
@@ -40,11 +40,11 @@ func TestGetUserRequest(t *testing.T) {
 			},
 		},
 		{
-			name:      "NotFound",
-			userEmail: user.Email,
+			name:     "NotFound",
+			username: user.Username,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
-					GetUser(gomock.Any(), gomock.Eq(user.Email)).
+					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
 					Return(db.User{}, sql.ErrNoRows)
 			},
@@ -53,11 +53,11 @@ func TestGetUserRequest(t *testing.T) {
 			},
 		},
 		{
-			name:      "InternalError",
-			userEmail: user.Email,
+			name:     "InternalError",
+			username: user.Username,
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
-					GetUser(gomock.Any(), gomock.Eq(user.Email)).
+					GetUser(gomock.Any(), gomock.Eq(user.Username)).
 					Times(1).
 					Return(db.User{}, sql.ErrConnDone)
 			},
@@ -66,8 +66,8 @@ func TestGetUserRequest(t *testing.T) {
 			},
 		},
 		{
-			name:      "InvalidEmail",
-			userEmail: "notlegitemail",
+			name:     "InvalidUsername",
+			username: "short", //username too short.
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
 					GetUser(gomock.Any(), gomock.Any()).
@@ -92,7 +92,7 @@ func TestGetUserRequest(t *testing.T) {
 			server := NewServer(store)
 			recorder := httptest.NewRecorder()
 
-			url := fmt.Sprintf("/users/%s", tc.userEmail)
+			url := fmt.Sprintf("/users/%s", tc.username)
 			fmt.Println(url)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
 			require.NoError(t, err)
@@ -106,6 +106,7 @@ func TestGetUserRequest(t *testing.T) {
 func randomUser() db.User {
 	return db.User{
 		Email:          util.RandomEmail(),
+		Username:       util.RandomName(),
 		HashedPassword: util.RandomString(6),
 	}
 }

@@ -17,12 +17,14 @@ import (
 
 type createUserResponse struct {
 	Email             string    `json:"email"`
+	Username          string    `json:"username"`
 	PasswordChangedAt time.Time `json:"password_changed_at"`
 	CreatedAt         time.Time `json:"created_at"`
 }
 
 type createUserRequest struct {
 	Email    string `json:"email" binding:"required,email"`
+	Username string `json:"username" binding:"required,min=6"`
 	Password string `json:"password" binding:"required,password"`
 }
 
@@ -45,6 +47,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 
 	arg := db.CreateUserParams{
 		Email:          req.Email,
+		Username:       req.Username,
 		HashedPassword: hashedPassword,
 	}
 	user, err := server.store.CreateUser(ctx, arg)
@@ -63,6 +66,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 
 	rsp := createUserResponse{
 		Email:             user.Email,
+		Username:          user.Username,
 		PasswordChangedAt: user.PasswordChangedAt,
 		CreatedAt:         user.PasswordChangedAt,
 	}
@@ -70,7 +74,7 @@ func (server *Server) createUser(ctx *gin.Context) {
 }
 
 type getUserRequest struct {
-	Email string `uri:"email" binding:"required,email"`
+	Username string `uri:"username" binding:"required,min=6"`
 }
 
 func (server *Server) getUser(ctx *gin.Context) {
@@ -80,7 +84,7 @@ func (server *Server) getUser(ctx *gin.Context) {
 		return
 	}
 
-	user, err := server.store.GetUser(ctx, req.Email)
+	user, err := server.store.GetUser(ctx, req.Username)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))

@@ -30,5 +30,8 @@ test:
 mock:
 	cd feed && mockgen -destination pkg/db/mock/store.go -package mockdb simplesedge.com/feed/pkg/db Store
 
+dev:
+	reflex -R 'gen/|bin/' -s make server
+
 .PHONY: local-up local-down sqlc server mock
 

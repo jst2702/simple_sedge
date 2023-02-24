@@ -20,15 +20,15 @@ type Querier interface {
 	GetDocument(ctx context.Context, guid string) (Document, error)
 	GetModel(ctx context.Context, id int64) (Model, error)
 	GetScore(ctx context.Context, id int64) (SentimentScore, error)
-	GetUser(ctx context.Context, email string) (User, error)
+	GetUser(ctx context.Context, username string) (User, error)
 	ListDocuments(ctx context.Context, arg ListDocumentsParams) ([]Document, error)
 	ListModels(ctx context.Context, arg ListModelsParams) ([]Model, error)
 	ListScores(ctx context.Context, arg ListScoresParams) ([]SentimentScore, error)
 	ListUsers(ctx context.Context, arg ListUsersParams) ([]User, error)
 	UpdateDocument(ctx context.Context, arg UpdateDocumentParams) (Document, error)
 	UpdateModel(ctx context.Context, arg UpdateModelParams) (Model, error)
+	UpdatePassword(ctx context.Context, arg UpdatePasswordParams) (User, error)
 	UpdateScore(ctx context.Context, arg UpdateScoreParams) (SentimentScore, error)
-	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
 }
 
 var _ Querier = (*Queries)(nil)
