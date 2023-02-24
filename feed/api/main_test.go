@@ -8,11 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
 	config "simplesedge.com/feed/pkg/config"
-	"simplesedge.com/feed/pkg/db"
+	mockdb "simplesedge.com/feed/pkg/db/mock"
 	"simplesedge.com/gokit/util"
 )
 
-func newTestServer(t *testing.T, store db.Store) *Server {
+func newTestServer(t *testing.T, store *mockdb.MockStore) *Server {
 	config := &config.Config{
 		TokenSymmetricKey:   util.RandomString(32),
 		AccessTokenduration: time.Minute,
