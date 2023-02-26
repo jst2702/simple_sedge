@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"
 	"simplesedge.com/feed/pkg/db"
+	"simplesedge.com/gokit/token"
 	"simplesedge.com/gokit/util"
 )
 
@@ -87,18 +88,15 @@ func (server *Server) createUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, rsp)
 }
 
-type getUserRequest struct {
-	Username string `uri:"username" binding:"required,min=6"`
-}
-
 func (server *Server) getUser(ctx *gin.Context) {
-	var req getUserRequest
-	if err := ctx.ShouldBindUri(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
-		return
-	}
+	// var req getUserRequest
+	// if err := ctx.ShouldBindUri(&req); err != nil {
+	// 	ctx.JSON(http.StatusBadRequest, errorResponse(err))
+	// 	return
+	// }
 
-	user, err := server.store.GetUser(ctx, req.Username)
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+	user, err := server.store.GetUser(ctx, authPayload.Username)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
