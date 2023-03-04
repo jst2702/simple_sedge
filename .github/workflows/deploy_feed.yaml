@@ -22,6 +22,9 @@ jobs:
         with:
           go-version: '1.19.0'
 
+      - name: Load secrets and ave to feed/app.env
+        run: aws secretsmanager get-secret-value --secret-id simplesedge --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value)")|.[]' > feed/app.env
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

@@ -30,6 +30,12 @@ mac install: `brew install sqlc`
 ---
 ## Production deployment
 
+See the .github/workflows for more info.
+
+* Docker images of the app are built and stored on Amazon ECR
+* The production database is hosted on amazon RDS
+* AWS cli for mac (downloaded here: https://awscli.amazonaws.com/AWSCLIV2.pkg)
+
 ---
 ## Resources
 db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
