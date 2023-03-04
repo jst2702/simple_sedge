@@ -36,6 +36,8 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: simple_sedge
           IMAGE_TAG: ${{ github.sha }}
+        with:
+          go-version: '1.19'
         run: |
           go version
           cd feed && make modsync
