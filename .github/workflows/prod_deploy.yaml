@@ -37,5 +37,5 @@ jobs:
           REPOSITORY: simple_sedge
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./feed
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG . -f feed/Dockerfile
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
