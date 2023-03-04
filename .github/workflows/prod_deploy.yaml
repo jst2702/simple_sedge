@@ -35,6 +35,10 @@ jobs:
           REPOSITORY: simple_sedge
           IMAGE_TAG: ${{ github.sha }}
         run: |
+<<<<<<< HEAD
           cd feed && make modsync
+=======
+          cd feed && go mod vendor
+>>>>>>> 7c308b8 (.)
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./feed
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
