@@ -1,17 +1,23 @@
 
+local-up:
+	cd feed %% make modsync
+	docker compose up
+
 migrate-up:
 	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose up
 
 migrate-up-1:
-	migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose up 1
+	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose up 1
 
 migrate-down:
 	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose down
 
 migrate-down-1:
-	migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose down 1
+	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose down 1
 
 server:
+	make sqlc
+	make mock
 	cd feed && go run main.go
 
 sqlc:
