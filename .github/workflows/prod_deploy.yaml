@@ -4,9 +4,9 @@ name: Deploy to production
 
 on:
   push:
-    branches: [ ci-debug ]
+    branches: [ main ]
   pull_request:
-    branches: [ ci-debug ]
+    branches: [ main ]
 
 jobs:
 
