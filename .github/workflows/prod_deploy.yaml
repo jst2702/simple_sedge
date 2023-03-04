@@ -40,5 +40,5 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd feed && make modsync
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG /feed
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
