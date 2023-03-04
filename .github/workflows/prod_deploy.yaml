@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+        with:
+          go-version: '1.19'
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -35,6 +37,6 @@ jobs:
           REPOSITORY: simple_sedge
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd feed && go mod vendor
+          cd feed && make modsync
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG ./feed
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
