@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
 
@@ -15,7 +15,7 @@ do
 done
 
 echo "loading env file"
-source /app/app.env
+source ./app/app.env
 echo "after env file"
 echo $DB_SOURCE
 /app/migrate -path /app/migrations -database "$DB_SOURCE" -verbose up
