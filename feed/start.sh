@@ -6,7 +6,7 @@ echo "run db migration"
 echo "before env file"
 echo $DB_SOURCE
 
-source /app/app.env
+source app.env
 echo "after env file"
 echo $DB_SOURCE
 /app/migrate -path /app/migrations -database "$DB_SOURCE" -verbose up
