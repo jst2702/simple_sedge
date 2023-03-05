@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -6,7 +6,7 @@ echo "run db migration"
 
 echo "before env file"
 echo $DB_SOURCE
-echo "contents of the env file\n"
+echo "contents of the app dir"
 
 search_dir=/app
 for entry in "$search_dir"/*
