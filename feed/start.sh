@@ -3,10 +3,7 @@
 set -e
 
 echo "run db migration"
-# source /app/app.env
-set -a
-. /app/app.env
-set +a
+source /app/app.env
 echo $DB_SOURCE
 /app/migrate -path /app/migrations -database "$DB_SOURCE" -verbose up
 
