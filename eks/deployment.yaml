@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-sedge-feed-deployment
+  labels:
+    app: simple-sedge-feed
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-sedge-feed
+  template:
+    metadata:
+      labels:
+        app: simple-sedge-feed
+    spec:
+      containers:
+      - name: simple-sedge-feed
+        image: 983218914998.dkr.ecr.us-east-1.amazonaws.com/simple_sedge:9972a5b9df87eddb01d53976c0a0659fc67e3c5c
+        ports:
+        - containerPort: 8080
