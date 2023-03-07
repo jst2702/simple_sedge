@@ -5,7 +5,7 @@ metadata:
   labels:
     app: simple-sedge-feed
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: simple-sedge-feed
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: simple-sedge-feed
-        image: 983218914998.dkr.ecr.us-east-1.amazonaws.com/simple_sedge:63cc24a3243e74426472b16e3edf99f91fa2f8c3
+        image: 983218914998.dkr.ecr.us-east-1.amazonaws.com/simple_sedge:67e20e04b24cd58d4fddae15e375b406ce3cc145
         ports:
         - containerPort: 8080

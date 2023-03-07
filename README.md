@@ -30,6 +30,11 @@ mac install: `brew install sqlc`
 ---
 ## Production deployment
 
+* Github actions for the CICD
+* AWS ECR for storing the docker production image
+* AWS RDS for the production postgresql database
+* AWS EKS for the backend cluster.
+
 ---
 ## Resources
 db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
@@ -45,3 +50,8 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `viper` for using config files
 * `gomock` for db mocking
 * `paseto` for token authentication
+
+## Useful commands
+* `aws ecr get-login-password`
+* `simple_sedge % aws ecr get-login-password | docker login --username AWS --password-stdin <ECR ARN>`
+* `docker run -it --entrypoint /bin/sh <docker image>`
