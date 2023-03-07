@@ -51,3 +51,8 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `viper` for using config files
 * `gomock` for db mocking
 * `paseto` for token authentication
+
+## Useful commands
+* `aws ecr get-login-password`
+* `simple_sedge % aws ecr get-login-password | docker login --username AWS --password-stdin <ECR ARN>`
+* `docker run -it --entrypoint /bin/sh <docker image>`

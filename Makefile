@@ -32,5 +32,11 @@ mock:
 dev:
 	reflex -R 'gen/|bin/' -s make server
 
+update-kube-config:
+	simple_sedge % aws eks update-kubeconfig --name simple-sedge us-east-2
+
+eks-apply:
+	kubectl apply -f eks/deployment.yaml
+
 .PHONY: local-up local-down sqlc server mock
 
