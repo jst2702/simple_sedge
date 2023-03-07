@@ -35,6 +35,10 @@ dev:
 update-kube-config:
 	simple_sedge % aws eks update-kubeconfig --name simple-sedge us-east-2
 
+aws ecr get-login-password
+
+simple_sedge % aws ecr get-login-password | docker login --username AWS --password-stdin 983218914998.dkr.ecr.us-east-1.amazonaws.com
+
 eks-apply:
 	kubectl apply -f eks/deployment.yaml
 
