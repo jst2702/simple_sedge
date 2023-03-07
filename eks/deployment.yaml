@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: simple-sedge-feed
-        image: 983218914998.dkr.ecr.us-east-1.amazonaws.com/simple_sedge:9972a5b9df87eddb01d53976c0a0659fc67e3c5c
+        image: 983218914998.dkr.ecr.us-east-1.amazonaws.com/simple_sedge:63cc24a3243e74426472b16e3edf99f91fa2f8c3
         ports:
         - containerPort: 8080
