@@ -30,10 +30,11 @@ mac install: `brew install sqlc`
 ---
 ## Production deployment
 
-* Github actions for the CICD
-* AWS ECR for storing the docker production image
-* AWS RDS for the production postgresql database
-* AWS EKS for the backend cluster.
+See the .github/workflows for more info.
+
+* Docker images of the app are built and stored on Amazon ECR
+* The production database is hosted on amazon RDS
+* AWS cli for mac (downloaded here: https://awscli.amazonaws.com/AWSCLIV2.pkg)
 
 ---
 ## Resources
