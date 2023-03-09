@@ -57,3 +57,4 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `simple_sedge % aws ecr get-login-password | docker login --username AWS --password-stdin <ECR ARN>`
 * `docker run -it --entrypoint /bin/sh <docker image>`
 * `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/cloud/deploy.yaml`
+* `kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml`
