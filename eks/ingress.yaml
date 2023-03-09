@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+spec:
+  controller: k8s.io/ingress-nginx
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-sedge-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "api.simple-sedge.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: simple-sedge-feed-service
+            port:
+              number: 80
