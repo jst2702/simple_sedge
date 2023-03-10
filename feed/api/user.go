@@ -44,7 +44,7 @@ func newUserResponse(user db.User) userResponse {
 		Email:             user.Email,
 		Username:          user.Username,
 		PasswordChangedAt: user.PasswordChangedAt,
-		CreatedAt:         user.PasswordChangedAt,
+		CreatedAt:         user.CreatedAt,
 	}
 }
 
