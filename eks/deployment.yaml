@@ -17,5 +17,6 @@ spec:
       containers:
       - name: simple-sedge-feed
         image: 983218914998.dkr.ecr.us-east-1.amazonaws.com/simple_sedge:latest
+        impagePullPolicy: Always
         ports:
         - containerPort: 8080
