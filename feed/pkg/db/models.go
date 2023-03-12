@@ -7,6 +7,8 @@ package db
 import (
 	"database/sql"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Document struct {
@@ -39,6 +41,17 @@ type SentimentScore struct {
 	DocumentGuid string    `json:"document_guid"`
 	Sentiment    int64     `json:"sentiment"`
 	Confidence   int64     `json:"confidence"`
+	CreatedAt    time.Time `json:"created_at"`
+}
+
+type Session struct {
+	ID           uuid.UUID `json:"id"`
+	Username     string    `json:"username"`
+	RefreshToken string    `json:"refresh_token"`
+	UserAgent    string    `json:"user_agent"`
+	ClientIp     string    `json:"client_ip"`
+	IsBlocked    bool      `json:"is_blocked"`
+	ExpiredAt    time.Time `json:"expired_at"`
 	CreatedAt    time.Time `json:"created_at"`
 }
 
