@@ -1,19 +1,20 @@
+DB_URL=postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable
 
 local-up:
 	cd feed %% make modsync
 	docker compose up
 
 migrate-up:
-	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose up
+	cd feed && migrate -path db/migrations -database "$(DB_URL)" -verbose up
 
 migrate-up-1:
-	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose up 1
+	cd feed && migrate -path db/migrations -database "$(DB_URL)" -verbose up 1
 
 migrate-down:
-	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose down
+	cd feed && migrate -path db/migrations -database "$(DB_URL)" -verbose down
 
 migrate-down-1:
-	cd feed && migrate -path db/migrations -database "postgresql://root:secret@localhost:5432/simplesedge?sslmode=disable" -verbose down 1
+	cd feed && migrate -path db/migrations -database "$(DB_URL)" -verbose down 1
 
 server:
 	make sqlc
@@ -38,5 +39,11 @@ update-kube-config:
 eks-apply:
 	kubectl apply -f eks/deployment.yaml
 
-.PHONY: local-up local-down sqlc server mock
+db_docs:
+	dbdocs build doc/db.dbml
+
+db_schema:
+	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
+
+.PHONY: local-up local-down sqlc server mock, db_docs, db_schema
 

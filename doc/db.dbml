@@ -1,0 +1,83 @@
+Project simple_sedge {
+    database_type: 'PostgreSQL'
+    Note: '''
+    # Simple stock market edge news feed service.
+    '''
+}
+
+Table documents as D {
+  guid varchar [pk]
+  url varchar [not null]
+  site varchar [not null]
+  site_full varchar [not null]
+  site_section varchar [not null]
+  headline varchar [not null]
+  title varchar [not null]
+  body varchar [not null]
+  ticker varchar
+  tickers varchar[]
+  published_at timestamptz [not null]
+  language varchar
+  created_at timestamptz [not null, default: `now()`]
+  
+  Indexes {
+    ticker
+    (ticker, published_at)
+    (headline, published_at)
+  }
+}
+
+Table models as M {
+  id bigserial [pk]
+  name varchar [not null]
+  role varchar [not null]
+  description varchar
+  created_at timestamptz [not null, default: `now()`]
+  
+  Indexes {
+    name
+  }
+}
+
+Table sentiment_scores as P {
+  id bigserial [pk]
+  model_id bigserial [ref: > M.id, not null]
+  document_guid varchar [ref: > D.guid, not null]
+  sentiment bigint [not null]
+  confidence bigint [not null]
+  created_at timestamptz [not null, default: `now()`]
+  
+  Indexes {
+    document_guid
+    (sentiment, confidence)
+  }
+}
+
+Table users as U {
+  username varchar [pk]
+  email varchar [not null, unique]
+  hashed_password varchar [not null]
+  password_changed_at timestamptz [not null, default: '0001-01-01 00:00:00Z']
+  created_at timestamptz [not null, default: `now()`]
+  
+  Indexes {
+    email
+  }
+}
+
+
+Table sessions as S {
+  id bigserial [pk]
+  username varchar [ref: > U.username]
+  refresh_token varchar
+  user_agent varchar
+  client_up varchar
+  is_blocked boolean
+  expires_at timestamptz [not null]
+  created_at timestamptz [not null, default: `now()`]
+  
+  Indexes {
+    username
+    created_at
+  }
+}

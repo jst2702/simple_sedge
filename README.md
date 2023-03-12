@@ -1,4 +1,7 @@
 # simple_sedge (monorepo)
+dbdocs hosted here: https://dbdocs.io/jst2702/simple_sedge (password: `secret`)
+
+
 Simple (production) app for stock market edge. 
 
 `feed`: Various news feeds are monitored and scraped, and the results are run through a simple nlp process for sentiment. The data is scraped as real time as possible for potential use in making automated trades on news articles.
@@ -51,6 +54,8 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `viper` for using config files
 * `gomock` for db mocking
 * `paseto` for token authentication
+* `dbdocs` (`sudo npm install -g dbdocs`)
+* `dbcli` (`npm install -g @dbml/cli`)
 
 ## Useful commands
 * `aws ecr get-login-password`
