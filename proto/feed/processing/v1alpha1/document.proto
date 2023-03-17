@@ -1,0 +1,46 @@
+syntax = "proto3";
+package processing.v1alpha1;
+import "google/protobuf/timestamp.proto";
+
+enum Platform {
+    PLATFORM_UNDEFINED = 0;
+    PLATFORM_BUSINESS_NEWSWIRE = 1;
+    PLATFORM_GLOBAL_NEWSWIRE = 2;
+    PLATFORM_PR_NEWSWIRE = 3;
+    PLATFORM_ACCESSWIRE = 4;
+    PLATFORM_MOTLEY_FOOL = 5;
+  };
+  
+enum DocStatus {
+    STATUS_UNDEFINED = 0;
+    STATUS_SUBMITTED = 1;
+    STATUS_FAULTED = 2;
+    STATUS_PROCESSED = 3;
+    STATUS_COMPLETED = 4;
+};
+
+message DocMetadata {
+    string uuid = 1 [ json_name = "encounter_id" ];
+    string url = 2 [ json_name = "url" ];
+    string site = 3 [ json_name = "site" ];
+    string site_full = 4 [ json_name = "site_full" ];
+    string site_section = 5 [ json_name = "site_section" ];
+    string headline = 6 [ json_name = "headline" ];
+    string title = 7 [ json_name = "title" ];
+    string body = 8 [ json_name = "body" ];
+    string published = 9 [ json_name = "published" ];
+    string language = 10 [ json_name = "language" ];
+};
+
+message Document {
+    string id = 1 [ json_name = "id" ];
+    Platform platform = 3 [ json_name = "platform" ];
+    int64 size = 4 [ json_name = "size" ];
+    // indicates if the document has been succesfully processed
+    DocStatus status = 5;
+    string text = 6 [json_name = "text"];
+    google.protobuf.Timestamp created_at = 7 [ json_name = "created_at" ];
+    google.protobuf.Timestamp updated_at = 8 [ json_name = "updated_at" ];
+    DocMetadata metadata = 9 [ json_name = "updated_at" ];
+};
+

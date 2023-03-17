@@ -1,0 +1,16 @@
+syntax = "proto3";
+package processing.v1alpha1;
+import "processing/v1alpha1/document.proto";
+import "processing/v1alpha1/rpc_document.proto";
+import "google/api/annotations.proto";
+
+
+service IngestionService {
+    // Ingest a new data object for processing
+    rpc IngestDocument(IngestDocumentRequest) returns (IngestDocumentResponse) {
+      option (google.api.http) = {
+        post : "/processing/v2alpha1/documents/ingest"
+        body : "*"
+      };
+    };
+  }

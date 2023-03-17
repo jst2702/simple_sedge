@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "simplesedgeapis"
+version = "0.1.0"
+description = ""
+authors = ["jst2702 <jst2702@vt.edu>"]
+packages = [
+	{ include = "processing", from = "gen/python"}
+]
+
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+grpcio = "^1.51.3"
+protobuf = "^4.22.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

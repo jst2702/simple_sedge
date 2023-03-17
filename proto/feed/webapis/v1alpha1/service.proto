@@ -1,0 +1,14 @@
+syntax = "proto3";
+package processing.v1alpha1;
+import "webapis/v1alpha1/user_rpc.proto";
+
+service SimpleSedge {
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+
+    }
+
+    rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {
+
+    }
+}
+

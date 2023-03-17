@@ -1,0 +1,17 @@
+syntax = "proto3";
+package processing.v1alpha1;
+import "processing/v1alpha1/document.proto";
+
+message IngestDocumentRequest {
+    // which news platform
+    Platform platform = 1 [ json_name = "platform" ];
+    // raw bytes containing the payload
+    bytes payload = 2 [ json_name = "input" ];
+    // specified metadata
+    DocMetadata metadata = 3 [ json_name = "metadata" ];
+};
+
+message IngestDocumentResponse {
+    // unique identifier for external reference
+    string id = 1 [ json_name = "id" ];
+};

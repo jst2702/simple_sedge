@@ -45,5 +45,8 @@ db_docs:
 db_schema:
 	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
 
+evans:
+	evans --host localhost --port 9090 -r repl
+	
 .PHONY: local-up local-down sqlc server mock, db_docs, db_schema
 

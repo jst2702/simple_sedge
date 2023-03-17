@@ -29,7 +29,9 @@ mac install: `brew install sqlc`
 * gomock for mocking https://github.com/golang/mock <br> mac install: `go install github.com/golang/mock/mockgen@v1.6.0`
 * poetry for python dependency management
 * reflex for easier development: <br> mac install: `go install github.com/cespare/reflex@latest`
-
+* `evans` (gRPC client)
+    * `brew tap ktr0731`
+    * `brew install evans`
 ---
 ## Production deployment
 
@@ -56,6 +58,7 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `paseto` for token authentication
 * `dbdocs` (`sudo npm install -g dbdocs`)
 * `dbcli` (`npm install -g @dbml/cli`)
+* protofbuf
 
 ## Useful commands
 * `aws ecr get-login-password`
