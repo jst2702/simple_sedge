@@ -180,7 +180,7 @@ func (server *Server) loginUser(ctx *gin.Context) {
 		UserAgent:    ctx.Request.UserAgent(),
 		ClientIp:     ctx.ClientIP(),
 		IsBlocked:    false,
-		ExpiredAt:    refreshPayload.ExpiredAt,
+		ExpiresAt:    refreshPayload.ExpiresAt,
 	})
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
@@ -190,9 +190,9 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	rsp := loginUserResponse{
 		SessionID:             session.ID,
 		AccessToken:           accessToken,
-		AccessTokenExpiresAt:  accessPayload.ExpiredAt,
+		AccessTokenExpiresAt:  accessPayload.ExpiresAt,
 		RefreshToken:          refreshToken,
-		RefreshTokenExpiresAt: refreshPayload.ExpiredAt,
+		RefreshTokenExpiresAt: refreshPayload.ExpiresAt,
 		User:                  newUserResponse(user),
 	}
 	ctx.JSON(http.StatusOK, rsp)
