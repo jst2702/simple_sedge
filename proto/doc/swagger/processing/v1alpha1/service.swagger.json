@@ -1,0 +1,156 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "processing/v1alpha1/service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "IngestionService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/processing/v1alpha1/documents/ingest": {
+      "post": {
+        "summary": "Ingest a new data object for processing",
+        "operationId": "IngestionService_IngestDocument",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1IngestDocumentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1alpha1IngestDocumentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IngestionService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1alpha1DocMetadata": {
+      "type": "object",
+      "properties": {
+        "encounter_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "published": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "v1alpha1IngestDocumentRequest": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "$ref": "#/definitions/v1alpha1Platform",
+          "title": "which news platform"
+        },
+        "input": {
+          "type": "string",
+          "format": "byte",
+          "title": "raw bytes containing the payload"
+        },
+        "metadata": {
+          "$ref": "#/definitions/v1alpha1DocMetadata",
+          "title": "specified metadata"
+        }
+      }
+    },
+    "v1alpha1IngestDocumentResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "unique identifier for external reference"
+        }
+      }
+    },
+    "v1alpha1Platform": {
+      "type": "string",
+      "enum": [
+        "PLATFORM_UNDEFINED",
+        "PLATFORM_BUSINESS_NEWSWIRE",
+        "PLATFORM_GLOBAL_NEWSWIRE",
+        "PLATFORM_PR_NEWSWIRE",
+        "PLATFORM_ACCESSWIRE",
+        "PLATFORM_MOTLEY_FOOL"
+      ],
+      "default": "PLATFORM_UNDEFINED"
+    }
+  }
+}

@@ -19,3 +19,7 @@ plugins:
     out: gen/go
     opt:
       - paths=source_relative
+  - name: openapiv2
+    out: doc/swagger
+    opt:
+      - merge_file_name=simple_sedge

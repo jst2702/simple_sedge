@@ -1,14 +1,21 @@
 syntax = "proto3";
 package processing.v1alpha1;
 import "webapis/v1alpha1/user_rpc.proto";
+import "google/api/annotations.proto"; //Ignore error. buf has file.
 
 service SimpleSedge {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
-
+        option (google.api.http) = {
+            post : "/v1alpha1/create_user"
+            body : "*"
+        };
     }
 
     rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {
-
+        option (google.api.http) = {
+            post : "/v1alpha1/login_user"
+            body : "*"
+        };
     }
 }
 

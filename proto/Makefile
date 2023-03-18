@@ -16,6 +16,8 @@ clean:
 	rm -r dist/ || true
 	rm -r ../intel-web/proto || true
 
+# (optionally, specify a folder and the end) 
+# buf generate --template buf.gen.go.yaml feed/webapis
 gen-go:
 	buf generate --template buf.gen.go.yaml
 
