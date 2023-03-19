@@ -3,6 +3,7 @@ package processing.v1alpha1;
 import "webapis/v1alpha1/user_rpc.proto";
 import "google/api/annotations.proto"; //Ignore error. buf has file.
 
+
 service SimpleSedge {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
         option (google.api.http) = {
@@ -18,4 +19,3 @@ service SimpleSedge {
         };
     }
 }
-

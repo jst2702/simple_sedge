@@ -7,6 +7,7 @@ require (
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
 	github.com/lib/pq v1.10.7
 	github.com/stretchr/testify v1.8.2
 	google.golang.org/grpc v1.52.0

@@ -5,15 +5,22 @@ import (
 	"database/sql"
 	"log"
 
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"simplesedge.com/feed/pkg/db"
+	"simplesedge.com/feed/val"
 	"simplesedge.com/gokit/util"
 	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
 )
 
 func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (*pb.LoginUserResponse, error) {
+	violations := validateLoginUserRequest(req)
+	if violations != nil {
+		return nil, InvalidArgumentError(violations)
+	}
+
 	user, err := server.store.GetUser(ctx, req.Username)
 
 	log.Println("requested user", user.HashedPassword)
@@ -69,4 +76,17 @@ func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (
 	}
 
 	return rsp, nil
+}
+
+func validateLoginUserRequest(
+	req *pb.LoginUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+	if err := val.ValidateUsername(req.GetUsername()); err != nil {
+		violations = append(violations, fieldViolation("username", err))
+	}
+
+	if err := val.ValidatePassword(req.GetUsername()); err != nil {
+		violations = append(violations, fieldViolation("password", err))
+	}
+	return violations
+
 }
