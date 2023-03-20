@@ -33,6 +33,7 @@ type Querier interface {
 	UpdateModel(ctx context.Context, arg UpdateModelParams) (Model, error)
 	UpdatePassword(ctx context.Context, arg UpdatePasswordParams) (User, error)
 	UpdateScore(ctx context.Context, arg UpdateScoreParams) (SentimentScore, error)
+	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
 }
 
 var _ Querier = (*Queries)(nil)

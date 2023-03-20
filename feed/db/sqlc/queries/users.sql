@@ -21,6 +21,15 @@ UPDATE users set hashed_password = $2
 WHERE username = $1
 RETURNING *;
 
+-- name: UpdateUser :one
+UPDATE users
+SET
+  hashed_password = COALESCE(sqlc.narg(hashed_password), hashed_password),
+  email = COALESCE(sqlc.narg(email), email)
+WHERE
+  username = sqlc.arg(username)
+RETURNING *;
+
 -- name: DeleteUser :exec
 DELETE FROM users
 WHERE email = $1;

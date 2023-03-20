@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"testing"
 	"time"
 
@@ -43,4 +44,21 @@ func TestGetUser(t *testing.T) {
 	require.NotEmpty(t, model2)
 	require.Equal(t, model1, model2)
 	require.WithinDuration(t, model1.CreatedAt, model2.CreatedAt, time.Second)
+}
+
+func TestUpdateUserOnlyEmail(t *testing.T) {
+	oldUser := createRandomUser(t)
+
+	newEmail := util.RandomEmail()
+	updatedUser, err := testQueries.UpdateUser(context.Background(), UpdateUserParams{
+		Username: oldUser.Username,
+		Email: sql.NullString{
+			String: newEmail,
+			Valid:  true,
+		},
+	})
+
+	require.NoError(t, err)
+	require.NotEqual(t, oldUser.Email, updatedUser.Email)
+	require.Equal(t, oldUser.HashedPassword, updatedUser.HashedPassword)
 }
