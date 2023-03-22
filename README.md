@@ -58,6 +58,7 @@ db diagram url: https://dbdiagram.io/d/63bdec5d6afaa541e5d1a1fa
 * `paseto` for token authentication
 * `dbdocs` (`sudo npm install -g dbdocs`)
 * `dbcli` (`npm install -g @dbml/cli`)
+* `zerolog` for gRPC logging
 * protofbuf
 
 ## Useful commands

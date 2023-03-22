@@ -24,6 +24,11 @@ class SimpleSedgeStub(object):
                 request_serializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.LoginUserRequest.SerializeToString,
                 response_deserializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.LoginUserResponse.FromString,
                 )
+        self.UpdateUser = channel.unary_unary(
+                '/processing.v1alpha1.SimpleSedge/UpdateUser',
+                request_serializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.UpdateUserRequest.SerializeToString,
+                response_deserializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.UpdateUserResponse.FromString,
+                )
 
 
 class SimpleSedgeServicer(object):
@@ -41,6 +46,12 @@ class SimpleSedgeServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UpdateUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SimpleSedgeServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -53,6 +64,11 @@ def add_SimpleSedgeServicer_to_server(servicer, server):
                     servicer.LoginUser,
                     request_deserializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.LoginUserRequest.FromString,
                     response_serializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.LoginUserResponse.SerializeToString,
+            ),
+            'UpdateUser': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateUser,
+                    request_deserializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.UpdateUserRequest.FromString,
+                    response_serializer=webapis_dot_v1alpha1_dot_user__rpc__pb2.UpdateUserResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -95,5 +111,22 @@ class SimpleSedge(object):
         return grpc.experimental.unary_unary(request, target, '/processing.v1alpha1.SimpleSedge/LoginUser',
             webapis_dot_v1alpha1_dot_user__rpc__pb2.LoginUserRequest.SerializeToString,
             webapis_dot_v1alpha1_dot_user__rpc__pb2.LoginUserResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateUser(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/processing.v1alpha1.SimpleSedge/UpdateUser',
+            webapis_dot_v1alpha1_dot_user__rpc__pb2.UpdateUserRequest.SerializeToString,
+            webapis_dot_v1alpha1_dot_user__rpc__pb2.UpdateUserResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

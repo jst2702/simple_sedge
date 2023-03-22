@@ -18,4 +18,11 @@ service SimpleSedge {
             body : "*"
         };
     }
+
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
+        option (google.api.http) = {
+            post : "/v1alpha1/update_user"
+            body : "*"
+        };
+    }
 }

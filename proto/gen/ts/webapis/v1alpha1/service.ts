@@ -1,12 +1,20 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { CreateUserRequest, CreateUserResponse, LoginUserRequest, LoginUserResponse } from "./user_rpc";
+import {
+  CreateUserRequest,
+  CreateUserResponse,
+  LoginUserRequest,
+  LoginUserResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+} from "./user_rpc";
 
 export const protobufPackage = "processing.v1alpha1";
 
 export interface SimpleSedge {
   CreateUser(request: CreateUserRequest): Promise<CreateUserResponse>;
   LoginUser(request: LoginUserRequest): Promise<LoginUserResponse>;
+  UpdateUser(request: UpdateUserRequest): Promise<UpdateUserResponse>;
 }
 
 export class SimpleSedgeClientImpl implements SimpleSedge {
@@ -17,6 +25,7 @@ export class SimpleSedgeClientImpl implements SimpleSedge {
     this.rpc = rpc;
     this.CreateUser = this.CreateUser.bind(this);
     this.LoginUser = this.LoginUser.bind(this);
+    this.UpdateUser = this.UpdateUser.bind(this);
   }
   CreateUser(request: CreateUserRequest): Promise<CreateUserResponse> {
     const data = CreateUserRequest.encode(request).finish();
@@ -28,6 +37,12 @@ export class SimpleSedgeClientImpl implements SimpleSedge {
     const data = LoginUserRequest.encode(request).finish();
     const promise = this.rpc.request(this.service, "LoginUser", data);
     return promise.then((data) => LoginUserResponse.decode(new _m0.Reader(data)));
+  }
+
+  UpdateUser(request: UpdateUserRequest): Promise<UpdateUserResponse> {
+    const data = UpdateUserRequest.encode(request).finish();
+    const promise = this.rpc.request(this.service, "UpdateUser", data);
+    return promise.then((data) => UpdateUserResponse.decode(new _m0.Reader(data)));
   }
 }
 

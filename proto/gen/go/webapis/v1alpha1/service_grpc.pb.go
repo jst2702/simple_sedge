@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type SimpleSedgeClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 }
 
 type simpleSedgeClient struct {
@@ -48,12 +49,22 @@ func (c *simpleSedgeClient) LoginUser(ctx context.Context, in *LoginUserRequest,
 	return out, nil
 }
 
+func (c *simpleSedgeClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, "/processing.v1alpha1.SimpleSedge/UpdateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SimpleSedgeServer is the server API for SimpleSedge service.
 // All implementations should embed UnimplementedSimpleSedgeServer
 // for forward compatibility
 type SimpleSedgeServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
+	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 }
 
 // UnimplementedSimpleSedgeServer should be embedded to have forward compatible implementations.
@@ -65,6 +76,9 @@ func (UnimplementedSimpleSedgeServer) CreateUser(context.Context, *CreateUserReq
 }
 func (UnimplementedSimpleSedgeServer) LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginUser not implemented")
+}
+func (UnimplementedSimpleSedgeServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 
 // UnsafeSimpleSedgeServer may be embedded to opt out of forward compatibility for this service.
@@ -114,6 +128,24 @@ func _SimpleSedge_LoginUser_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SimpleSedge_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SimpleSedgeServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/processing.v1alpha1.SimpleSedge/UpdateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SimpleSedgeServer).UpdateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SimpleSedge_ServiceDesc is the grpc.ServiceDesc for SimpleSedge service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -128,6 +160,10 @@ var SimpleSedge_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LoginUser",
 			Handler:    _SimpleSedge_LoginUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _SimpleSedge_UpdateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

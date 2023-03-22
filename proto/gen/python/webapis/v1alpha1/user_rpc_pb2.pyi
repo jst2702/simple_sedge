@@ -7,6 +7,7 @@ import google.protobuf.descriptor
 import google.protobuf.message
 import google.protobuf.timestamp_pb2
 import sys
+import typing
 import webapis.v1alpha1.user_pb2
 
 if sys.version_info >= (3, 8):
@@ -101,3 +102,44 @@ class LoginUserResponse(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["access_token", b"access_token", "access_token_expires_at", b"access_token_expires_at", "refresh_token", b"refresh_token", "refresh_token_expires_at", b"refresh_token_expires_at", "session_id", b"session_id", "user", b"user"]) -> None: ...
 
 global___LoginUserResponse = LoginUserResponse
+
+class UpdateUserRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    USERNAME_FIELD_NUMBER: builtins.int
+    EMAIL_FIELD_NUMBER: builtins.int
+    PASSWORD_FIELD_NUMBER: builtins.int
+    username: builtins.str
+    email: builtins.str
+    password: builtins.str
+    def __init__(
+        self,
+        *,
+        username: builtins.str = ...,
+        email: builtins.str | None = ...,
+        password: builtins.str | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_email", b"_email", "_password", b"_password", "email", b"email", "password", b"password"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_email", b"_email", "_password", b"_password", "email", b"email", "password", b"password", "username", b"username"]) -> None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_email", b"_email"]) -> typing_extensions.Literal["email"] | None: ...
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_password", b"_password"]) -> typing_extensions.Literal["password"] | None: ...
+
+global___UpdateUserRequest = UpdateUserRequest
+
+class UpdateUserResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    USER_FIELD_NUMBER: builtins.int
+    @property
+    def user(self) -> webapis.v1alpha1.user_pb2.User: ...
+    def __init__(
+        self,
+        *,
+        user: webapis.v1alpha1.user_pb2.User | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["user", b"user"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["user", b"user"]) -> None: ...
+
+global___UpdateUserResponse = UpdateUserResponse

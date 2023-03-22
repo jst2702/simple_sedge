@@ -29,6 +29,16 @@ export interface LoginUserResponse {
   refreshTokenExpiresAt: string | undefined;
 }
 
+export interface UpdateUserRequest {
+  username: string;
+  email?: string | undefined;
+  password?: string | undefined;
+}
+
+export interface UpdateUserResponse {
+  user: User | undefined;
+}
+
 function createBaseCreateUserRequest(): CreateUserRequest {
   return { email: "", username: "", password: "" };
 }
@@ -298,6 +308,120 @@ export const LoginUserResponse = {
     message.refreshToken = object.refreshToken ?? "";
     message.accessTokenExpiresAt = object.accessTokenExpiresAt ?? undefined;
     message.refreshTokenExpiresAt = object.refreshTokenExpiresAt ?? undefined;
+    return message;
+  },
+};
+
+function createBaseUpdateUserRequest(): UpdateUserRequest {
+  return { username: "", email: undefined, password: undefined };
+}
+
+export const UpdateUserRequest = {
+  encode(message: UpdateUserRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.username !== "") {
+      writer.uint32(10).string(message.username);
+    }
+    if (message.email !== undefined) {
+      writer.uint32(18).string(message.email);
+    }
+    if (message.password !== undefined) {
+      writer.uint32(26).string(message.password);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateUserRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateUserRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.username = reader.string();
+          break;
+        case 2:
+          message.email = reader.string();
+          break;
+        case 3:
+          message.password = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateUserRequest {
+    return {
+      username: isSet(object.username) ? String(object.username) : "",
+      email: isSet(object.email) ? String(object.email) : undefined,
+      password: isSet(object.password) ? String(object.password) : undefined,
+    };
+  },
+
+  toJSON(message: UpdateUserRequest): unknown {
+    const obj: any = {};
+    message.username !== undefined && (obj.username = message.username);
+    message.email !== undefined && (obj.email = message.email);
+    message.password !== undefined && (obj.password = message.password);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateUserRequest>, I>>(object: I): UpdateUserRequest {
+    const message = createBaseUpdateUserRequest();
+    message.username = object.username ?? "";
+    message.email = object.email ?? undefined;
+    message.password = object.password ?? undefined;
+    return message;
+  },
+};
+
+function createBaseUpdateUserResponse(): UpdateUserResponse {
+  return { user: undefined };
+}
+
+export const UpdateUserResponse = {
+  encode(message: UpdateUserResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.user !== undefined) {
+      User.encode(message.user, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): UpdateUserResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseUpdateUserResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.user = User.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): UpdateUserResponse {
+    return { user: isSet(object.user) ? User.fromJSON(object.user) : undefined };
+  },
+
+  toJSON(message: UpdateUserResponse): unknown {
+    const obj: any = {};
+    message.user !== undefined && (obj.user = message.user ? User.toJSON(message.user) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<UpdateUserResponse>, I>>(object: I): UpdateUserResponse {
+    const message = createBaseUpdateUserResponse();
+    message.user = (object.user !== undefined && object.user !== null) ? User.fromPartial(object.user) : undefined;
     return message;
   },
 };

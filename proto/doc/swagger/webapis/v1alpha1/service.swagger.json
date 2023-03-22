@@ -79,6 +79,38 @@
           "SimpleSedge"
         ]
       }
+    },
+    "/v1alpha1/update_user": {
+      "post": {
+        "operationId": "SimpleSedge_UpdateUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1UpdateUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1alpha1UpdateUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SimpleSedge"
+        ]
+      }
     }
   },
   "definitions": {
@@ -164,6 +196,28 @@
         "refreshTokenExpiresAt": {
           "type": "string",
           "format": "date-time"
+        }
+      }
+    },
+    "v1alpha1UpdateUserRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "v1alpha1UpdateUserResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1alpha1User"
         }
       }
     },
