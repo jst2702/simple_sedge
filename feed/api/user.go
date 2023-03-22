@@ -138,7 +138,6 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	}
 
 	user, err := server.store.GetUser(ctx, req.Username)
-	log.Println("requested user", user.HashedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			ctx.JSON(http.StatusNotFound, errorResponse(err))
@@ -149,7 +148,6 @@ func (server *Server) loginUser(ctx *gin.Context) {
 	}
 
 	err = util.CheckPassword(req.Password, user.HashedPassword)
-	log.Println("logging password", req.Password)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
