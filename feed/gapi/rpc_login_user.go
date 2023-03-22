@@ -3,7 +3,6 @@ package gapi
 import (
 	"context"
 	"database/sql"
-	"log"
 
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
@@ -23,7 +22,6 @@ func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (
 
 	user, err := server.store.GetUser(ctx, req.Username)
 
-	log.Println("requested user", user.HashedPassword)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return nil, status.Errorf(codes.NotFound, "username not found %s", err)
@@ -32,7 +30,6 @@ func (server *Server) LoginUser(ctx context.Context, req *pb.LoginUserRequest) (
 	}
 
 	err = util.CheckPassword(req.Password, user.HashedPassword)
-	log.Println("logging password", req.Password)
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "incorrect password %s", err)
 	}
