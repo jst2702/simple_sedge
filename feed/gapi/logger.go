@@ -53,7 +53,7 @@ func (rec *ResponseRecorder) WriteHeader(statusCode int) {
 
 func (rec *ResponseRecorder) Write(body []byte) (int, error) {
 	rec.Body = body
-	return rec.ResponseWriter.Write((body))
+	return rec.ResponseWriter.Write(body)
 }
 
 func HTTPLogger(handler http.Handler) http.Handler {

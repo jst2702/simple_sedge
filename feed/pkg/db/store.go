@@ -17,6 +17,7 @@ type RenameModelResult struct {
 type Store interface {
 	Querier
 	RenameModelTx(context.Context, RenameModelParams) RenameModelResult
+	CreateUserTx(ctx context.Context, arg CreateUserTxParams) (CreateUserTxResult, error)
 }
 
 type SQLStore struct {

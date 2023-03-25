@@ -5,13 +5,16 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"time"
 
+	"github.com/hibiken/asynq"
 	"github.com/lib/pq"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/feed/val"
+	"simplesedge.com/feed/worker"
 	"simplesedge.com/gokit/util"
 	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
 )
@@ -34,13 +37,27 @@ func (server *Server) CreateUser(
 		return nil, status.Errorf(codes.Internal, "failed to hash password %s", err)
 	}
 
-	arg := db.CreateUserParams{
-		Email:          req.GetEmail(),
-		Username:       req.GetUsername(),
-		HashedPassword: hashedPassword,
+	arg := db.CreateUserTxParams{
+		CreateUserParams: db.CreateUserParams{
+			Email:          req.GetEmail(),
+			Username:       req.GetUsername(),
+			HashedPassword: hashedPassword,
+		},
+		AfterCreate: func(user db.User) error {
+			taskPayload := &worker.PayloadSendVerifyEmail{
+				Username: user.Username,
+			}
+			opts := []asynq.Option{
+				asynq.MaxRetry(10),
+				asynq.ProcessIn(10 * time.Second),
+				asynq.Queue(worker.QueueCritical),
+			}
+			err = server.taskDistributor.DistributeTaskSendVerifyEmail(ctx, taskPayload, opts...)
+			return err
+		},
 	}
 
-	user, err := server.store.CreateUser(ctx, arg)
+	txResult, err := server.store.CreateUserTx(ctx, arg)
 	if err != nil {
 		if pqErr, ok := err.(*pq.Error); ok {
 			switch pqErr.Code.Name() {
@@ -52,7 +69,7 @@ func (server *Server) CreateUser(
 	}
 
 	rsp := &pb.CreateUserResponse{
-		User: convertUser(user),
+		User: convertUser(txResult.User),
 	}
 
 	return rsp, nil

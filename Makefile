@@ -47,6 +47,9 @@ db_schema:
 
 evans:
 	evans --host localhost --port 9090 -r repl
+
+redis:
+	docker run --name redis - p 6379:6379 -d redis:7-alpine
 	
 .PHONY: local-up local-down sqlc server mock, db_docs, db_schema
 

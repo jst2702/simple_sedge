@@ -11,6 +11,15 @@ services:
       - POSTGRES_USER=root
       - POSTGRES_DB=simplesedge
       - POSTGRES_PASSWORD=secret
+      
+  redis:
+    image: docker.io/redis:7
+    ports:
+      - "6379:6379"
+    # command: >
+    #   --requirepass prediction
+
+
 
 volumes:
   postgres_data:
