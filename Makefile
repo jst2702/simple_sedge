@@ -25,7 +25,7 @@ sqlc:
 	cd feed/db/sqlc && sqlc generate
 
 test:
-	go test -v -cover ./feed/...
+	go test -v -cover -short ./feed/...
 
 mock:
 	cd feed && mockgen -destination pkg/db/mock/store.go -package mockdb simplesedge.com/feed/pkg/db Store
