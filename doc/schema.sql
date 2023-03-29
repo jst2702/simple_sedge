@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2023-03-12T23:41:07.825Z
+-- Generated at: 2023-03-28T23:35:56.494Z
 
 CREATE TABLE "documents" (
   "guid" varchar PRIMARY KEY,
@@ -38,9 +38,20 @@ CREATE TABLE "sentiment_scores" (
 CREATE TABLE "users" (
   "username" varchar PRIMARY KEY,
   "email" varchar UNIQUE NOT NULL,
+  "is_email_verified" bool NOT NULL DEFAULT false,
   "hashed_password" varchar NOT NULL,
   "password_changed_at" timestamptz NOT NULL DEFAULT '0001-01-01 00:00:00Z',
   "created_at" timestamptz NOT NULL DEFAULT (now())
+);
+
+CREATE TABLE "verify_emails" (
+  "id" bigserial PRIMARY KEY,
+  "username" varchar NOT NULL,
+  "email" varchar NOT NULL,
+  "secret_code" varchar NOT NULL,
+  "is_used" bool NOT NULL DEFAULT false,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
+  "expired_at" timestamptz NOT NULL DEFAULT (now() + interval '15 minutes')
 );
 
 CREATE TABLE "sessions" (
@@ -75,5 +86,7 @@ CREATE INDEX ON "sessions" ("created_at");
 ALTER TABLE "sentiment_scores" ADD FOREIGN KEY ("model_id") REFERENCES "models" ("id");
 
 ALTER TABLE "sentiment_scores" ADD FOREIGN KEY ("document_guid") REFERENCES "documents" ("guid");
+
+ALTER TABLE "verify_emails" ADD FOREIGN KEY ("username") REFERENCES "users" ("username");
 
 ALTER TABLE "sessions" ADD FOREIGN KEY ("username") REFERENCES "users" ("username");

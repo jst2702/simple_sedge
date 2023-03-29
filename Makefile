@@ -50,6 +50,9 @@ evans:
 
 redis:
 	docker run --name redis - p 6379:6379 -d redis:7-alpine
+
+new_migration:
+	migrate create -ext sql -dir feed/db/migrations -seq $(name)
 	
 .PHONY: local-up local-down sqlc server mock, db_docs, db_schema
 
