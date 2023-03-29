@@ -16,7 +16,7 @@ INSERT INTO users (
 ) VALUES (
   $1, $2, $3
 )
-RETURNING username, email, hashed_password, password_changed_at, created_at
+RETURNING username, email, hashed_password, password_changed_at, created_at, is_email_verified
 `
 
 type CreateUserParams struct {
@@ -34,6 +34,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.HashedPassword,
 		&i.PasswordChangedAt,
 		&i.CreatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }
@@ -49,7 +50,7 @@ func (q *Queries) DeleteUser(ctx context.Context, email string) error {
 }
 
 const getUser = `-- name: GetUser :one
-SELECT username, email, hashed_password, password_changed_at, created_at FROM users
+SELECT username, email, hashed_password, password_changed_at, created_at, is_email_verified FROM users
 WHERE username = $1 LIMIT 1
 `
 
@@ -62,12 +63,13 @@ func (q *Queries) GetUser(ctx context.Context, username string) (User, error) {
 		&i.HashedPassword,
 		&i.PasswordChangedAt,
 		&i.CreatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }
 
 const listUsers = `-- name: ListUsers :many
-SELECT username, email, hashed_password, password_changed_at, created_at FROM users
+SELECT username, email, hashed_password, password_changed_at, created_at, is_email_verified FROM users
 ORDER by username
 limit $1
 OFFSET $2
@@ -93,6 +95,7 @@ func (q *Queries) ListUsers(ctx context.Context, arg ListUsersParams) ([]User, e
 			&i.HashedPassword,
 			&i.PasswordChangedAt,
 			&i.CreatedAt,
+			&i.IsEmailVerified,
 		); err != nil {
 			return nil, err
 		}
@@ -110,7 +113,7 @@ func (q *Queries) ListUsers(ctx context.Context, arg ListUsersParams) ([]User, e
 const updatePassword = `-- name: UpdatePassword :one
 UPDATE users set hashed_password = $2
 WHERE username = $1
-RETURNING username, email, hashed_password, password_changed_at, created_at
+RETURNING username, email, hashed_password, password_changed_at, created_at, is_email_verified
 `
 
 type UpdatePasswordParams struct {
@@ -127,6 +130,7 @@ func (q *Queries) UpdatePassword(ctx context.Context, arg UpdatePasswordParams) 
 		&i.HashedPassword,
 		&i.PasswordChangedAt,
 		&i.CreatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }
@@ -136,16 +140,18 @@ UPDATE users
 SET
   hashed_password = COALESCE($1, hashed_password),
   email = COALESCE($2, email),
-  password_changed_at = COALESCE($3, password_changed_at)
+  password_changed_at = COALESCE($3, password_changed_at),
+  is_email_verified = COALESCE($4, is_email_verified)
 WHERE
-  username = $4
-RETURNING username, email, hashed_password, password_changed_at, created_at
+  username = $5
+RETURNING username, email, hashed_password, password_changed_at, created_at, is_email_verified
 `
 
 type UpdateUserParams struct {
 	HashedPassword    sql.NullString `json:"hashed_password"`
 	Email             sql.NullString `json:"email"`
 	PasswordChangedAt sql.NullTime   `json:"password_changed_at"`
+	IsEmailVerified   sql.NullBool   `json:"is_email_verified"`
 	Username          string         `json:"username"`
 }
 
@@ -154,6 +160,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		arg.HashedPassword,
 		arg.Email,
 		arg.PasswordChangedAt,
+		arg.IsEmailVerified,
 		arg.Username,
 	)
 	var i User
@@ -163,6 +170,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		&i.HashedPassword,
 		&i.PasswordChangedAt,
 		&i.CreatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }

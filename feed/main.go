@@ -24,6 +24,7 @@ import (
 	config "simplesedge.com/feed/pkg/config"
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/feed/worker"
+	"simplesedge.com/gokit/mail"
 	kitsql "simplesedge.com/gokit/sql"
 	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
 )
@@ -44,7 +45,7 @@ func main() {
 	}
 
 	taskDistributor := worker.NewRedisTaskDistributor(redisOpt)
-	go runTaskProcessor(redisOpt, store)
+	go runTaskProcessor(cfg, redisOpt, store)
 	go runGRPCServer(cfg, store, taskDistributor)
 	runGatewayServer(cfg, store, taskDistributor)
 }
@@ -62,8 +63,9 @@ func runDBMigration(migrationURL string, dbSource string) {
 	log.Info().Msg("db migrated successfully")
 }
 
-func runTaskProcessor(redisOpt asynq.RedisClientOpt, store db.Store) {
-	taskProcessor := worker.NewRedisTaskProcessor(redisOpt, store)
+func runTaskProcessor(cfg *config.Config, redisOpt asynq.RedisClientOpt, store db.Store) {
+	mailer := mail.NewGmailSender(cfg.EmailSenderName, cfg.EmailSenderAddress, cfg.EmailSenderPassword)
+	taskProcessor := worker.NewRedisTaskProcessor(redisOpt, store, mailer)
 	log.Info().Msg("start task processor")
 	err := taskProcessor.Start()
 	if err != nil {

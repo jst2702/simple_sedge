@@ -18,6 +18,7 @@ type Store interface {
 	Querier
 	RenameModelTx(context.Context, RenameModelParams) RenameModelResult
 	CreateUserTx(ctx context.Context, arg CreateUserTxParams) (CreateUserTxResult, error)
+	VerifyEmailTx(ctx context.Context, arg VerifyEmailTxParams) (VerifyEmailTxResult, error)
 }
 
 type SQLStore struct {

@@ -16,6 +16,7 @@ type Querier interface {
 	CreateScore(ctx context.Context, arg CreateScoreParams) (SentimentScore, error)
 	CreateSession(ctx context.Context, arg CreateSessionParams) (Session, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
+	CreateVerifyEmail(ctx context.Context, arg CreateVerifyEmailParams) (VerifyEmail, error)
 	DeleteDocuemnt(ctx context.Context, guid string) error
 	DeleteModel(ctx context.Context, id int64) error
 	DeleteScore(ctx context.Context, id int64) error
@@ -34,6 +35,7 @@ type Querier interface {
 	UpdatePassword(ctx context.Context, arg UpdatePasswordParams) (User, error)
 	UpdateScore(ctx context.Context, arg UpdateScoreParams) (SentimentScore, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
+	UpdateVerifyEmail(ctx context.Context, arg UpdateVerifyEmailParams) (VerifyEmail, error)
 }
 
 var _ Querier = (*Queries)(nil)
