@@ -25,4 +25,10 @@ service SimpleSedge {
             body : "*"
         };
     }
+
+    rpc VerifyEmail (VerifyEmailRequest) returns (VerifyEmailResponse) {
+        option (google.api.http) = {
+            get : "/v1alpha1/verify_email"
+        };
+    }
 }

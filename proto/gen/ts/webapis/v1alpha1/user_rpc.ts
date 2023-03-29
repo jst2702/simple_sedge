@@ -1,4 +1,5 @@
 /* eslint-disable */
+import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Timestamp } from "../../google/protobuf/timestamp";
 import { User } from "./user";
@@ -37,6 +38,15 @@ export interface UpdateUserRequest {
 
 export interface UpdateUserResponse {
   user: User | undefined;
+}
+
+export interface VerifyEmailRequest {
+  emailId: number;
+  secretCode: string;
+}
+
+export interface VerifyEmailResponse {
+  isVerified: boolean;
 }
 
 function createBaseCreateUserRequest(): CreateUserRequest {
@@ -426,6 +436,130 @@ export const UpdateUserResponse = {
   },
 };
 
+function createBaseVerifyEmailRequest(): VerifyEmailRequest {
+  return { emailId: 0, secretCode: "" };
+}
+
+export const VerifyEmailRequest = {
+  encode(message: VerifyEmailRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.emailId !== 0) {
+      writer.uint32(8).int64(message.emailId);
+    }
+    if (message.secretCode !== "") {
+      writer.uint32(18).string(message.secretCode);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): VerifyEmailRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVerifyEmailRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.emailId = longToNumber(reader.int64() as Long);
+          break;
+        case 2:
+          message.secretCode = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): VerifyEmailRequest {
+    return {
+      emailId: isSet(object.emailId) ? Number(object.emailId) : 0,
+      secretCode: isSet(object.secretCode) ? String(object.secretCode) : "",
+    };
+  },
+
+  toJSON(message: VerifyEmailRequest): unknown {
+    const obj: any = {};
+    message.emailId !== undefined && (obj.emailId = Math.round(message.emailId));
+    message.secretCode !== undefined && (obj.secretCode = message.secretCode);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<VerifyEmailRequest>, I>>(object: I): VerifyEmailRequest {
+    const message = createBaseVerifyEmailRequest();
+    message.emailId = object.emailId ?? 0;
+    message.secretCode = object.secretCode ?? "";
+    return message;
+  },
+};
+
+function createBaseVerifyEmailResponse(): VerifyEmailResponse {
+  return { isVerified: false };
+}
+
+export const VerifyEmailResponse = {
+  encode(message: VerifyEmailResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.isVerified === true) {
+      writer.uint32(8).bool(message.isVerified);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): VerifyEmailResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVerifyEmailResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.isVerified = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): VerifyEmailResponse {
+    return { isVerified: isSet(object.isVerified) ? Boolean(object.isVerified) : false };
+  },
+
+  toJSON(message: VerifyEmailResponse): unknown {
+    const obj: any = {};
+    message.isVerified !== undefined && (obj.isVerified = message.isVerified);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<VerifyEmailResponse>, I>>(object: I): VerifyEmailResponse {
+    const message = createBaseVerifyEmailResponse();
+    message.isVerified = object.isVerified ?? false;
+    return message;
+  },
+};
+
+declare var self: any | undefined;
+declare var window: any | undefined;
+declare var global: any | undefined;
+var tsProtoGlobalThis: any = (() => {
+  if (typeof globalThis !== "undefined") {
+    return globalThis;
+  }
+  if (typeof self !== "undefined") {
+    return self;
+  }
+  if (typeof window !== "undefined") {
+    return window;
+  }
+  if (typeof global !== "undefined") {
+    return global;
+  }
+  throw "Unable to locate global object";
+})();
+
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 
 export type DeepPartial<T> = T extends Builtin ? T
@@ -448,6 +582,18 @@ function fromTimestamp(t: Timestamp): string {
   let millis = t.seconds * 1_000;
   millis += t.nanos / 1_000_000;
   return new Date(millis).toISOString();
+}
+
+function longToNumber(long: Long): number {
+  if (long.gt(Number.MAX_SAFE_INTEGER)) {
+    throw new tsProtoGlobalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  return long.toNumber();
+}
+
+if (_m0.util.Long !== Long) {
+  _m0.util.Long = Long as any;
+  _m0.configure();
 }
 
 function isSet(value: any): boolean {

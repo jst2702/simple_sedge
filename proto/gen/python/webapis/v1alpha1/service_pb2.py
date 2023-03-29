@@ -15,7 +15,7 @@ from webapis.v1alpha1 import user_rpc_pb2 as webapis_dot_v1alpha1_dot_user__rpc_
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ewebapis/v1alpha1/service.proto\x12\x13processing.v1alpha1\x1a\x1fwebapis/v1alpha1/user_rpc.proto\x1a\x1cgoogle/api/annotations.proto2\x8c\x03\n\x0bSimpleSedge\x12\x7f\n\nCreateUser\x12&.processing.v1alpha1.CreateUserRequest\x1a\'.processing.v1alpha1.CreateUserResponse\" \x82\xd3\xe4\x93\x02\x1a\"\x15/v1alpha1/create_user:\x01*\x12{\n\tLoginUser\x12%.processing.v1alpha1.LoginUserRequest\x1a&.processing.v1alpha1.LoginUserResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\"\x14/v1alpha1/login_user:\x01*\x12\x7f\n\nUpdateUser\x12&.processing.v1alpha1.UpdateUserRequest\x1a\'.processing.v1alpha1.UpdateUserResponse\" \x82\xd3\xe4\x93\x02\x1a\"\x15/v1alpha1/update_user:\x01*B\x94\x01\n\x17\x63om.processing.v1alpha1B\x0cServiceProtoP\x01\xa2\x02\x03PXX\xaa\x02\x13Processing.V1alpha1\xca\x02\x13Processing\\V1alpha1\xe2\x02\x1fProcessing\\V1alpha1\\GPBMetadata\xea\x02\x14Processing::V1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1ewebapis/v1alpha1/service.proto\x12\x13processing.v1alpha1\x1a\x1fwebapis/v1alpha1/user_rpc.proto\x1a\x1cgoogle/api/annotations.proto2\x8f\x04\n\x0bSimpleSedge\x12\x7f\n\nCreateUser\x12&.processing.v1alpha1.CreateUserRequest\x1a\'.processing.v1alpha1.CreateUserResponse\" \x82\xd3\xe4\x93\x02\x1a\"\x15/v1alpha1/create_user:\x01*\x12{\n\tLoginUser\x12%.processing.v1alpha1.LoginUserRequest\x1a&.processing.v1alpha1.LoginUserResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\"\x14/v1alpha1/login_user:\x01*\x12\x7f\n\nUpdateUser\x12&.processing.v1alpha1.UpdateUserRequest\x1a\'.processing.v1alpha1.UpdateUserResponse\" \x82\xd3\xe4\x93\x02\x1a\"\x15/v1alpha1/update_user:\x01*\x12\x80\x01\n\x0bVerifyEmail\x12\'.processing.v1alpha1.VerifyEmailRequest\x1a(.processing.v1alpha1.VerifyEmailResponse\"\x1e\x82\xd3\xe4\x93\x02\x18\x12\x16/v1alpha1/verify_emailB\x94\x01\n\x17\x63om.processing.v1alpha1B\x0cServiceProtoP\x01\xa2\x02\x03PXX\xaa\x02\x13Processing.V1alpha1\xca\x02\x13Processing\\V1alpha1\xe2\x02\x1fProcessing\\V1alpha1\\GPBMetadata\xea\x02\x14Processing::V1alpha1b\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'webapis.v1alpha1.service_pb2', globals())
@@ -29,6 +29,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _SIMPLESEDGE.methods_by_name['LoginUser']._serialized_options = b'\202\323\344\223\002\031\"\024/v1alpha1/login_user:\001*'
   _SIMPLESEDGE.methods_by_name['UpdateUser']._options = None
   _SIMPLESEDGE.methods_by_name['UpdateUser']._serialized_options = b'\202\323\344\223\002\032\"\025/v1alpha1/update_user:\001*'
+  _SIMPLESEDGE.methods_by_name['VerifyEmail']._options = None
+  _SIMPLESEDGE.methods_by_name['VerifyEmail']._serialized_options = b'\202\323\344\223\002\030\022\026/v1alpha1/verify_email'
   _SIMPLESEDGE._serialized_start=119
-  _SIMPLESEDGE._serialized_end=515
+  _SIMPLESEDGE._serialized_end=646
 # @@protoc_insertion_point(module_scope)

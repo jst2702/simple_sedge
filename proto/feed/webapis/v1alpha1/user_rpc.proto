@@ -36,3 +36,12 @@ message UpdateUserRequest {
 message UpdateUserResponse {
     User user = 1;
 }
+
+message VerifyEmailRequest {
+    int64 email_id = 1;
+    string secret_code = 2;
+}
+
+message VerifyEmailResponse {
+    bool is_verified = 1;
+}

@@ -143,3 +143,34 @@ class UpdateUserResponse(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["user", b"user"]) -> None: ...
 
 global___UpdateUserResponse = UpdateUserResponse
+
+class VerifyEmailRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    EMAIL_ID_FIELD_NUMBER: builtins.int
+    SECRET_CODE_FIELD_NUMBER: builtins.int
+    email_id: builtins.int
+    secret_code: builtins.str
+    def __init__(
+        self,
+        *,
+        email_id: builtins.int = ...,
+        secret_code: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["email_id", b"email_id", "secret_code", b"secret_code"]) -> None: ...
+
+global___VerifyEmailRequest = VerifyEmailRequest
+
+class VerifyEmailResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    IS_VERIFIED_FIELD_NUMBER: builtins.int
+    is_verified: builtins.bool
+    def __init__(
+        self,
+        *,
+        is_verified: builtins.bool = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["is_verified", b"is_verified"]) -> None: ...
+
+global___VerifyEmailResponse = VerifyEmailResponse
