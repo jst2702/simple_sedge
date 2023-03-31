@@ -25,12 +25,13 @@ INSERT INTO documents (
   body, 
   ticker, 
   tickers, 
-  published_at, 
-  language
+  published_at,
+  language,
+  api_key_used
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
 )
-RETURNING guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at
+RETURNING guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at, api_key_used
 `
 
 type CreateDocumentParams struct {
@@ -46,6 +47,7 @@ type CreateDocumentParams struct {
 	Tickers     []string       `json:"tickers"`
 	PublishedAt time.Time      `json:"published_at"`
 	Language    sql.NullString `json:"language"`
+	ApiKeyUsed  string         `json:"api_key_used"`
 }
 
 func (q *Queries) CreateDocument(ctx context.Context, arg CreateDocumentParams) (Document, error) {
@@ -62,6 +64,7 @@ func (q *Queries) CreateDocument(ctx context.Context, arg CreateDocumentParams) 
 		pq.Array(arg.Tickers),
 		arg.PublishedAt,
 		arg.Language,
+		arg.ApiKeyUsed,
 	)
 	var i Document
 	err := row.Scan(
@@ -78,6 +81,7 @@ func (q *Queries) CreateDocument(ctx context.Context, arg CreateDocumentParams) 
 		&i.PublishedAt,
 		&i.Language,
 		&i.CreatedAt,
+		&i.ApiKeyUsed,
 	)
 	return i, err
 }
@@ -93,7 +97,7 @@ func (q *Queries) DeleteDocuemnt(ctx context.Context, guid string) error {
 }
 
 const getDocument = `-- name: GetDocument :one
-SELECT guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at FROM documents
+SELECT guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at, api_key_used FROM documents
 WHERE guid = $1 LIMIT 1
 `
 
@@ -114,12 +118,13 @@ func (q *Queries) GetDocument(ctx context.Context, guid string) (Document, error
 		&i.PublishedAt,
 		&i.Language,
 		&i.CreatedAt,
+		&i.ApiKeyUsed,
 	)
 	return i, err
 }
 
 const listDocuments = `-- name: ListDocuments :many
-SELECT guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at FROM documents
+SELECT guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at, api_key_used FROM documents
 ORDER by guid
 limit $1
 OFFSET $2
@@ -153,6 +158,7 @@ func (q *Queries) ListDocuments(ctx context.Context, arg ListDocumentsParams) ([
 			&i.PublishedAt,
 			&i.Language,
 			&i.CreatedAt,
+			&i.ApiKeyUsed,
 		); err != nil {
 			return nil, err
 		}
@@ -172,7 +178,7 @@ UPDATE documents
   set ticker = $2, 
   tickers = $3
 WHERE guid = $1
-RETURNING guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at
+RETURNING guid, url, site, site_full, site_section, headline, title, body, ticker, tickers, published_at, language, created_at, api_key_used
 `
 
 type UpdateDocumentParams struct {
@@ -198,6 +204,7 @@ func (q *Queries) UpdateDocument(ctx context.Context, arg UpdateDocumentParams) 
 		&i.PublishedAt,
 		&i.Language,
 		&i.CreatedAt,
+		&i.ApiKeyUsed,
 	)
 	return i, err
 }

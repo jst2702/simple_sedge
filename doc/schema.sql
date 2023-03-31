@@ -1,6 +1,6 @@
 -- SQL dump generated using DBML (dbml-lang.org)
 -- Database: PostgreSQL
--- Generated at: 2023-03-28T23:35:56.494Z
+-- Generated at: 2023-03-31T01:11:03.468Z
 
 CREATE TABLE "documents" (
   "guid" varchar PRIMARY KEY,
@@ -15,6 +15,13 @@ CREATE TABLE "documents" (
   "tickers" varchar[],
   "published_at" timestamptz NOT NULL,
   "language" varchar,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
+  "api_key_used" bigserial NOT NULL
+);
+
+CREATE TABLE "api_keys" (
+  "api_key" varchar PRIMARY KEY,
+  "active" bool DEFAULT true,
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
@@ -82,6 +89,8 @@ CREATE INDEX ON "users" ("email");
 CREATE INDEX ON "sessions" ("username");
 
 CREATE INDEX ON "sessions" ("created_at");
+
+ALTER TABLE "documents" ADD FOREIGN KEY ("api_key_used") REFERENCES "api_keys" ("api_key");
 
 ALTER TABLE "sentiment_scores" ADD FOREIGN KEY ("model_id") REFERENCES "models" ("id");
 

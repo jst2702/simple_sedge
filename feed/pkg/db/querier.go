@@ -11,6 +11,7 @@ import (
 )
 
 type Querier interface {
+	CreateApiKey(ctx context.Context, apiKey string) (ApiKey, error)
 	CreateDocument(ctx context.Context, arg CreateDocumentParams) (Document, error)
 	CreateModel(ctx context.Context, arg CreateModelParams) (Model, error)
 	CreateScore(ctx context.Context, arg CreateScoreParams) (SentimentScore, error)
@@ -21,6 +22,8 @@ type Querier interface {
 	DeleteModel(ctx context.Context, id int64) error
 	DeleteScore(ctx context.Context, id int64) error
 	DeleteUser(ctx context.Context, email string) error
+	DisableApiKey(ctx context.Context, apiKey string) (ApiKey, error)
+	GetApiKey(ctx context.Context, apiKey string) (ApiKey, error)
 	GetDocument(ctx context.Context, guid string) (Document, error)
 	GetModel(ctx context.Context, id int64) (Model, error)
 	GetScore(ctx context.Context, id int64) (SentimentScore, error)

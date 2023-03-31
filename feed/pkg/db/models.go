@@ -11,6 +11,12 @@ import (
 	"github.com/google/uuid"
 )
 
+type ApiKey struct {
+	ApiKey    string    `json:"api_key"`
+	Active    bool      `json:"active"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
 type Document struct {
 	Guid        string         `json:"guid"`
 	Url         string         `json:"url"`
@@ -25,6 +31,7 @@ type Document struct {
 	PublishedAt time.Time      `json:"published_at"`
 	Language    sql.NullString `json:"language"`
 	CreatedAt   time.Time      `json:"created_at"`
+	ApiKeyUsed  string         `json:"api_key_used"`
 }
 
 type Model struct {

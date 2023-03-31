@@ -10,10 +10,11 @@ INSERT INTO documents (
   body, 
   ticker, 
   tickers, 
-  published_at, 
-  language
+  published_at,
+  language,
+  api_key_used
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12
+  $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
 )
 RETURNING *;
 

@@ -36,6 +36,21 @@ func (m *MockStore) EXPECT() *MockStoreMockRecorder {
 	return m.recorder
 }
 
+// CreateApiKey mocks base method.
+func (m *MockStore) CreateApiKey(arg0 context.Context, arg1 string) (db.ApiKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateApiKey", arg0, arg1)
+	ret0, _ := ret[0].(db.ApiKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateApiKey indicates an expected call of CreateApiKey.
+func (mr *MockStoreMockRecorder) CreateApiKey(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateApiKey", reflect.TypeOf((*MockStore)(nil).CreateApiKey), arg0, arg1)
+}
+
 // CreateDocument mocks base method.
 func (m *MockStore) CreateDocument(arg0 context.Context, arg1 db.CreateDocumentParams) (db.Document, error) {
 	m.ctrl.T.Helper()
@@ -195,6 +210,36 @@ func (m *MockStore) DeleteUser(arg0 context.Context, arg1 string) error {
 func (mr *MockStoreMockRecorder) DeleteUser(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteUser", reflect.TypeOf((*MockStore)(nil).DeleteUser), arg0, arg1)
+}
+
+// DisableApiKey mocks base method.
+func (m *MockStore) DisableApiKey(arg0 context.Context, arg1 string) (db.ApiKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DisableApiKey", arg0, arg1)
+	ret0, _ := ret[0].(db.ApiKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// DisableApiKey indicates an expected call of DisableApiKey.
+func (mr *MockStoreMockRecorder) DisableApiKey(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DisableApiKey", reflect.TypeOf((*MockStore)(nil).DisableApiKey), arg0, arg1)
+}
+
+// GetApiKey mocks base method.
+func (m *MockStore) GetApiKey(arg0 context.Context, arg1 string) (db.ApiKey, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetApiKey", arg0, arg1)
+	ret0, _ := ret[0].(db.ApiKey)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetApiKey indicates an expected call of GetApiKey.
+func (mr *MockStoreMockRecorder) GetApiKey(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetApiKey", reflect.TypeOf((*MockStore)(nil).GetApiKey), arg0, arg1)
 }
 
 // GetDocument mocks base method.

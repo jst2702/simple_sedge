@@ -11,6 +11,8 @@ import (
 )
 
 func createRandomDocument(t *testing.T) Document {
+	key := createRandomApiKey(t)
+
 	arg := CreateDocumentParams{
 		Guid:        util.RandomString(45),
 		Url:         util.RandomString(30),
@@ -26,6 +28,7 @@ func createRandomDocument(t *testing.T) Document {
 			util.RandomString(4),
 			util.RandomString(4),
 		},
+		ApiKeyUsed: key.ApiKey,
 	}
 
 	doc, err := testQueries.CreateDocument(context.Background(), arg)

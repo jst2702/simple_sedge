@@ -19,12 +19,19 @@ Table documents as D {
   published_at timestamptz [not null]
   language varchar
   created_at timestamptz [not null, default: `now()`]
+  api_key_used bigserial [ref: > K.api_key, not null]
   
   Indexes {
     ticker
     (ticker, published_at)
     (headline, published_at)
   }
+}
+
+Table api_keys as K {
+  api_key varchar [pk]
+  active bool [default: true]
+  created_at timestamptz [not null, default: `now()`]
 }
 
 Table models as M {
