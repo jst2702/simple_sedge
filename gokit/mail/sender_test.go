@@ -16,7 +16,7 @@ type EmailConfig struct {
 
 func GetEmailConfig(path string) *EmailConfig {
 	config := &EmailConfig{}
-	err := kitcfg.LoadConfig(path, "email", "env", config)
+	err := kitcfg.LoadConfig(path, "app", "env", config)
 	if err != nil {
 		log.Fatal("cannot loading config ", err)
 	}

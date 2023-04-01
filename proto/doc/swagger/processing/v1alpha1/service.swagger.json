@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/processing/v1alpha1/documents/ingest": {
+    "/processing/v1alpha1/ingest_document": {
       "post": {
         "summary": "Ingest a new data object for processing",
         "operationId": "IngestionService_IngestDocument",
@@ -42,6 +42,44 @@
             "schema": {
               "$ref": "#/definitions/v1alpha1IngestDocumentRequest"
             }
+          }
+        ],
+        "tags": [
+          "IngestionService"
+        ]
+      }
+    },
+    "/v1alpha1/list_documents": {
+      "get": {
+        "operationId": "IngestionService_ListDocuments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1ListDocumentsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -78,10 +116,10 @@
         }
       }
     },
-    "v1alpha1DocMetadata": {
+    "v1alpha1Document": {
       "type": "object",
       "properties": {
-        "encounter_id": {
+        "guid": {
           "type": "string"
         },
         "url": {
@@ -105,6 +143,15 @@
         "body": {
           "type": "string"
         },
+        "ticker": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "published": {
           "type": "string"
         },
@@ -116,41 +163,68 @@
     "v1alpha1IngestDocumentRequest": {
       "type": "object",
       "properties": {
-        "platform": {
-          "$ref": "#/definitions/v1alpha1Platform",
-          "title": "which news platform"
+        "guid": {
+          "type": "string"
         },
-        "input": {
-          "type": "string",
-          "format": "byte",
-          "title": "raw bytes containing the payload"
+        "url": {
+          "type": "string"
         },
-        "metadata": {
-          "$ref": "#/definitions/v1alpha1DocMetadata",
-          "title": "specified metadata"
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "published": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "api_key": {
+          "type": "string"
         }
       }
     },
     "v1alpha1IngestDocumentResponse": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "title": "unique identifier for external reference"
+        "document": {
+          "$ref": "#/definitions/v1alpha1Document"
         }
       }
     },
-    "v1alpha1Platform": {
-      "type": "string",
-      "enum": [
-        "PLATFORM_UNDEFINED",
-        "PLATFORM_BUSINESS_NEWSWIRE",
-        "PLATFORM_GLOBAL_NEWSWIRE",
-        "PLATFORM_PR_NEWSWIRE",
-        "PLATFORM_ACCESSWIRE",
-        "PLATFORM_MOTLEY_FOOL"
-      ],
-      "default": "PLATFORM_UNDEFINED"
+    "v1alpha1ListDocumentsResponse": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1alpha1Document"
+          }
+        }
+      }
     }
   }
 }

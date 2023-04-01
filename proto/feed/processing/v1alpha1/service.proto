@@ -8,8 +8,14 @@ service IngestionService {
     // Ingest a new data object for processing
     rpc IngestDocument(IngestDocumentRequest) returns (IngestDocumentResponse) {
       option (google.api.http) = {
-        post : "/processing/v1alpha1/documents/ingest"
+        post : "/processing/v1alpha1/ingest_document"
         body : "*"
+      };
+    };
+
+    rpc ListDocuments(ListDocumentsRequest) returns (ListDocumentsResponse) {
+      option (google.api.http) = {
+        get : "/v1alpha1/list_documents"
       };
     };
   }

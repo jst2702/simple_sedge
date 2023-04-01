@@ -3,15 +3,30 @@ package processing.v1alpha1;
 import "processing/v1alpha1/document.proto";
 
 message IngestDocumentRequest {
-    // which news platform
-    Platform platform = 1 [ json_name = "platform" ];
-    // raw bytes containing the payload
-    bytes payload = 2 [ json_name = "input" ];
-    // specified metadata
-    DocMetadata metadata = 3 [ json_name = "metadata" ];
-};
+    string guid = 1 [ json_name = "guid" ];
+    string url = 2 [ json_name = "url" ];
+    string site = 3 [ json_name = "site" ];
+    string site_full = 4 [ json_name = "site_full" ];
+    string site_section = 5 [ json_name = "site_section" ];
+    string headline = 6 [ json_name = "headline" ];
+    string title = 7 [ json_name = "title" ];
+    string body = 8 [ json_name = "body" ];
+    optional string ticker = 9 [ json_name = "ticker" ];
+    repeated string tickers = 10 [ json_name = "ticker" ];
+    string published = 11 [ json_name = "published" ];
+    string language = 12 [ json_name = "language" ];
+    string api_key = 13 [ json_name = "api_key" ];
+}
 
 message IngestDocumentResponse {
-    // unique identifier for external reference
-    string id = 1 [ json_name = "id" ];
-};
+    Document document = 1;
+}
+
+message ListDocumentsRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message ListDocumentsResponse {
+    repeated Document documents = 1;
+}

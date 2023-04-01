@@ -19,7 +19,7 @@ Table documents as D {
   published_at timestamptz [not null]
   language varchar
   created_at timestamptz [not null, default: `now()`]
-  api_key_used bigserial [ref: > K.api_key, not null]
+  api_key_used varchar [ref: > K.api_key, not null]
   
   Indexes {
     ticker

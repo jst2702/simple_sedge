@@ -1,37 +1,96 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { DocMetadata, Platform, platformFromJSON, platformToJSON } from "./document";
+import { Document } from "./document";
 
 export const protobufPackage = "processing.v1alpha1";
 
 export interface IngestDocumentRequest {
-  /** which news platform */
-  platform: Platform;
-  /** raw bytes containing the payload */
-  payload: Uint8Array;
-  /** specified metadata */
-  metadata: DocMetadata | undefined;
+  guid: string;
+  url: string;
+  site: string;
+  siteFull: string;
+  siteSection: string;
+  headline: string;
+  title: string;
+  body: string;
+  ticker?: string | undefined;
+  tickers: string[];
+  published: string;
+  language: string;
+  apiKey: string;
 }
 
 export interface IngestDocumentResponse {
-  /** unique identifier for external reference */
-  id: string;
+  document: Document | undefined;
+}
+
+export interface ListDocumentsRequest {
+  limit: number;
+  offset: number;
+}
+
+export interface ListDocumentsResponse {
+  documents: Document[];
 }
 
 function createBaseIngestDocumentRequest(): IngestDocumentRequest {
-  return { platform: 0, payload: new Uint8Array(), metadata: undefined };
+  return {
+    guid: "",
+    url: "",
+    site: "",
+    siteFull: "",
+    siteSection: "",
+    headline: "",
+    title: "",
+    body: "",
+    ticker: undefined,
+    tickers: [],
+    published: "",
+    language: "",
+    apiKey: "",
+  };
 }
 
 export const IngestDocumentRequest = {
   encode(message: IngestDocumentRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.platform !== 0) {
-      writer.uint32(8).int32(message.platform);
+    if (message.guid !== "") {
+      writer.uint32(10).string(message.guid);
     }
-    if (message.payload.length !== 0) {
-      writer.uint32(18).bytes(message.payload);
+    if (message.url !== "") {
+      writer.uint32(18).string(message.url);
     }
-    if (message.metadata !== undefined) {
-      DocMetadata.encode(message.metadata, writer.uint32(26).fork()).ldelim();
+    if (message.site !== "") {
+      writer.uint32(26).string(message.site);
+    }
+    if (message.siteFull !== "") {
+      writer.uint32(34).string(message.siteFull);
+    }
+    if (message.siteSection !== "") {
+      writer.uint32(42).string(message.siteSection);
+    }
+    if (message.headline !== "") {
+      writer.uint32(50).string(message.headline);
+    }
+    if (message.title !== "") {
+      writer.uint32(58).string(message.title);
+    }
+    if (message.body !== "") {
+      writer.uint32(66).string(message.body);
+    }
+    if (message.ticker !== undefined) {
+      writer.uint32(74).string(message.ticker);
+    }
+    for (const v of message.tickers) {
+      writer.uint32(82).string(v!);
+    }
+    if (message.published !== "") {
+      writer.uint32(90).string(message.published);
+    }
+    if (message.language !== "") {
+      writer.uint32(98).string(message.language);
+    }
+    if (message.apiKey !== "") {
+      writer.uint32(106).string(message.apiKey);
     }
     return writer;
   },
@@ -44,13 +103,43 @@ export const IngestDocumentRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.platform = reader.int32() as any;
+          message.guid = reader.string();
           break;
         case 2:
-          message.payload = reader.bytes();
+          message.url = reader.string();
           break;
         case 3:
-          message.metadata = DocMetadata.decode(reader, reader.uint32());
+          message.site = reader.string();
+          break;
+        case 4:
+          message.siteFull = reader.string();
+          break;
+        case 5:
+          message.siteSection = reader.string();
+          break;
+        case 6:
+          message.headline = reader.string();
+          break;
+        case 7:
+          message.title = reader.string();
+          break;
+        case 8:
+          message.body = reader.string();
+          break;
+        case 9:
+          message.ticker = reader.string();
+          break;
+        case 10:
+          message.tickers.push(reader.string());
+          break;
+        case 11:
+          message.published = reader.string();
+          break;
+        case 12:
+          message.language = reader.string();
+          break;
+        case 13:
+          message.apiKey = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -62,41 +151,71 @@ export const IngestDocumentRequest = {
 
   fromJSON(object: any): IngestDocumentRequest {
     return {
-      platform: isSet(object.platform) ? platformFromJSON(object.platform) : 0,
-      payload: isSet(object.input) ? bytesFromBase64(object.input) : new Uint8Array(),
-      metadata: isSet(object.metadata) ? DocMetadata.fromJSON(object.metadata) : undefined,
+      guid: isSet(object.guid) ? String(object.guid) : "",
+      url: isSet(object.url) ? String(object.url) : "",
+      site: isSet(object.site) ? String(object.site) : "",
+      siteFull: isSet(object.site_full) ? String(object.site_full) : "",
+      siteSection: isSet(object.site_section) ? String(object.site_section) : "",
+      headline: isSet(object.headline) ? String(object.headline) : "",
+      title: isSet(object.title) ? String(object.title) : "",
+      body: isSet(object.body) ? String(object.body) : "",
+      ticker: isSet(object.ticker) ? String(object.ticker) : undefined,
+      tickers: Array.isArray(object?.ticker) ? object.ticker.map((e: any) => String(e)) : [],
+      published: isSet(object.published) ? String(object.published) : "",
+      language: isSet(object.language) ? String(object.language) : "",
+      apiKey: isSet(object.api_key) ? String(object.api_key) : "",
     };
   },
 
   toJSON(message: IngestDocumentRequest): unknown {
     const obj: any = {};
-    message.platform !== undefined && (obj.platform = platformToJSON(message.platform));
-    message.payload !== undefined &&
-      (obj.input = base64FromBytes(message.payload !== undefined ? message.payload : new Uint8Array()));
-    message.metadata !== undefined &&
-      (obj.metadata = message.metadata ? DocMetadata.toJSON(message.metadata) : undefined);
+    message.guid !== undefined && (obj.guid = message.guid);
+    message.url !== undefined && (obj.url = message.url);
+    message.site !== undefined && (obj.site = message.site);
+    message.siteFull !== undefined && (obj.site_full = message.siteFull);
+    message.siteSection !== undefined && (obj.site_section = message.siteSection);
+    message.headline !== undefined && (obj.headline = message.headline);
+    message.title !== undefined && (obj.title = message.title);
+    message.body !== undefined && (obj.body = message.body);
+    message.ticker !== undefined && (obj.ticker = message.ticker);
+    if (message.tickers) {
+      obj.ticker = message.tickers.map((e) => e);
+    } else {
+      obj.ticker = [];
+    }
+    message.published !== undefined && (obj.published = message.published);
+    message.language !== undefined && (obj.language = message.language);
+    message.apiKey !== undefined && (obj.api_key = message.apiKey);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<IngestDocumentRequest>, I>>(object: I): IngestDocumentRequest {
     const message = createBaseIngestDocumentRequest();
-    message.platform = object.platform ?? 0;
-    message.payload = object.payload ?? new Uint8Array();
-    message.metadata = (object.metadata !== undefined && object.metadata !== null)
-      ? DocMetadata.fromPartial(object.metadata)
-      : undefined;
+    message.guid = object.guid ?? "";
+    message.url = object.url ?? "";
+    message.site = object.site ?? "";
+    message.siteFull = object.siteFull ?? "";
+    message.siteSection = object.siteSection ?? "";
+    message.headline = object.headline ?? "";
+    message.title = object.title ?? "";
+    message.body = object.body ?? "";
+    message.ticker = object.ticker ?? undefined;
+    message.tickers = object.tickers?.map((e) => e) || [];
+    message.published = object.published ?? "";
+    message.language = object.language ?? "";
+    message.apiKey = object.apiKey ?? "";
     return message;
   },
 };
 
 function createBaseIngestDocumentResponse(): IngestDocumentResponse {
-  return { id: "" };
+  return { document: undefined };
 }
 
 export const IngestDocumentResponse = {
   encode(message: IngestDocumentResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.id !== "") {
-      writer.uint32(10).string(message.id);
+    if (message.document !== undefined) {
+      Document.encode(message.document, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -109,7 +228,7 @@ export const IngestDocumentResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = reader.string();
+          message.document = Document.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -120,65 +239,134 @@ export const IngestDocumentResponse = {
   },
 
   fromJSON(object: any): IngestDocumentResponse {
-    return { id: isSet(object.id) ? String(object.id) : "" };
+    return { document: isSet(object.document) ? Document.fromJSON(object.document) : undefined };
   },
 
   toJSON(message: IngestDocumentResponse): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = message.id);
+    message.document !== undefined && (obj.document = message.document ? Document.toJSON(message.document) : undefined);
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<IngestDocumentResponse>, I>>(object: I): IngestDocumentResponse {
     const message = createBaseIngestDocumentResponse();
-    message.id = object.id ?? "";
+    message.document = (object.document !== undefined && object.document !== null)
+      ? Document.fromPartial(object.document)
+      : undefined;
     return message;
   },
 };
 
-declare var self: any | undefined;
-declare var window: any | undefined;
-declare var global: any | undefined;
-var tsProtoGlobalThis: any = (() => {
-  if (typeof globalThis !== "undefined") {
-    return globalThis;
-  }
-  if (typeof self !== "undefined") {
-    return self;
-  }
-  if (typeof window !== "undefined") {
-    return window;
-  }
-  if (typeof global !== "undefined") {
-    return global;
-  }
-  throw "Unable to locate global object";
-})();
+function createBaseListDocumentsRequest(): ListDocumentsRequest {
+  return { limit: 0, offset: 0 };
+}
 
-function bytesFromBase64(b64: string): Uint8Array {
-  if (tsProtoGlobalThis.Buffer) {
-    return Uint8Array.from(tsProtoGlobalThis.Buffer.from(b64, "base64"));
-  } else {
-    const bin = tsProtoGlobalThis.atob(b64);
-    const arr = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; ++i) {
-      arr[i] = bin.charCodeAt(i);
+export const ListDocumentsRequest = {
+  encode(message: ListDocumentsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.limit !== 0) {
+      writer.uint32(8).int32(message.limit);
     }
-    return arr;
-  }
+    if (message.offset !== 0) {
+      writer.uint32(16).int32(message.offset);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ListDocumentsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseListDocumentsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.limit = reader.int32();
+          break;
+        case 2:
+          message.offset = reader.int32();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ListDocumentsRequest {
+    return {
+      limit: isSet(object.limit) ? Number(object.limit) : 0,
+      offset: isSet(object.offset) ? Number(object.offset) : 0,
+    };
+  },
+
+  toJSON(message: ListDocumentsRequest): unknown {
+    const obj: any = {};
+    message.limit !== undefined && (obj.limit = Math.round(message.limit));
+    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<ListDocumentsRequest>, I>>(object: I): ListDocumentsRequest {
+    const message = createBaseListDocumentsRequest();
+    message.limit = object.limit ?? 0;
+    message.offset = object.offset ?? 0;
+    return message;
+  },
+};
+
+function createBaseListDocumentsResponse(): ListDocumentsResponse {
+  return { documents: [] };
 }
 
-function base64FromBytes(arr: Uint8Array): string {
-  if (tsProtoGlobalThis.Buffer) {
-    return tsProtoGlobalThis.Buffer.from(arr).toString("base64");
-  } else {
-    const bin: string[] = [];
-    arr.forEach((byte) => {
-      bin.push(String.fromCharCode(byte));
-    });
-    return tsProtoGlobalThis.btoa(bin.join(""));
-  }
-}
+export const ListDocumentsResponse = {
+  encode(message: ListDocumentsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.documents) {
+      Document.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ListDocumentsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseListDocumentsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.documents.push(Document.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ListDocumentsResponse {
+    return {
+      documents: Array.isArray(object?.documents) ? object.documents.map((e: any) => Document.fromJSON(e)) : [],
+    };
+  },
+
+  toJSON(message: ListDocumentsResponse): unknown {
+    const obj: any = {};
+    if (message.documents) {
+      obj.documents = message.documents.map((e) => e ? Document.toJSON(e) : undefined);
+    } else {
+      obj.documents = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<ListDocumentsResponse>, I>>(object: I): ListDocumentsResponse {
+    const message = createBaseListDocumentsResponse();
+    message.documents = object.documents?.map((e) => Document.fromPartial(e)) || [];
+    return message;
+  },
+};
 
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 

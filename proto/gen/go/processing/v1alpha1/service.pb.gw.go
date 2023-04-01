@@ -65,6 +65,42 @@ func local_request_IngestionService_IngestDocument_0(ctx context.Context, marsha
 
 }
 
+var (
+	filter_IngestionService_ListDocuments_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
+func request_IngestionService_ListDocuments_0(ctx context.Context, marshaler runtime.Marshaler, client IngestionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListDocumentsRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_IngestionService_ListDocuments_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.ListDocuments(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_IngestionService_ListDocuments_0(ctx context.Context, marshaler runtime.Marshaler, server IngestionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListDocumentsRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_IngestionService_ListDocuments_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.ListDocuments(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterIngestionServiceHandlerServer registers the http handlers for service IngestionService to "mux".
 // UnaryRPC     :call IngestionServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -77,7 +113,7 @@ func RegisterIngestionServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/processing.v1alpha1.IngestionService/IngestDocument", runtime.WithHTTPPathPattern("/processing/v1alpha1/documents/ingest"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/processing.v1alpha1.IngestionService/IngestDocument", runtime.WithHTTPPathPattern("/processing/v1alpha1/ingest_document"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -91,6 +127,29 @@ func RegisterIngestionServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		}
 
 		forward_IngestionService_IngestDocument_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_IngestionService_ListDocuments_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/processing.v1alpha1.IngestionService/ListDocuments", runtime.WithHTTPPathPattern("/v1alpha1/list_documents"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_IngestionService_ListDocuments_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_IngestionService_ListDocuments_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -139,7 +198,7 @@ func RegisterIngestionServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/processing.v1alpha1.IngestionService/IngestDocument", runtime.WithHTTPPathPattern("/processing/v1alpha1/documents/ingest"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/processing.v1alpha1.IngestionService/IngestDocument", runtime.WithHTTPPathPattern("/processing/v1alpha1/ingest_document"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -155,13 +214,37 @@ func RegisterIngestionServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 
 	})
 
+	mux.Handle("GET", pattern_IngestionService_ListDocuments_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/processing.v1alpha1.IngestionService/ListDocuments", runtime.WithHTTPPathPattern("/v1alpha1/list_documents"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_IngestionService_ListDocuments_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_IngestionService_ListDocuments_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
 var (
-	pattern_IngestionService_IngestDocument_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"processing", "v1alpha1", "documents", "ingest"}, ""))
+	pattern_IngestionService_IngestDocument_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"processing", "v1alpha1", "ingest_document"}, ""))
+
+	pattern_IngestionService_ListDocuments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1alpha1", "list_documents"}, ""))
 )
 
 var (
 	forward_IngestionService_IngestDocument_0 = runtime.ForwardResponseMessage
+
+	forward_IngestionService_ListDocuments_0 = runtime.ForwardResponseMessage
 )

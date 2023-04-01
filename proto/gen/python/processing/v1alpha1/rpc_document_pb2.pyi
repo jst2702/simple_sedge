@@ -3,7 +3,9 @@
 isort:skip_file
 """
 import builtins
+import collections.abc
 import google.protobuf.descriptor
+import google.protobuf.internal.containers
 import google.protobuf.message
 import processing.v1alpha1.document_pb2
 import sys
@@ -18,39 +20,100 @@ DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 class IngestDocumentRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    PLATFORM_FIELD_NUMBER: builtins.int
-    PAYLOAD_FIELD_NUMBER: builtins.int
-    METADATA_FIELD_NUMBER: builtins.int
-    platform: processing.v1alpha1.document_pb2.Platform.ValueType
-    """which news platform"""
-    payload: builtins.bytes
-    """raw bytes containing the payload"""
+    GUID_FIELD_NUMBER: builtins.int
+    URL_FIELD_NUMBER: builtins.int
+    SITE_FIELD_NUMBER: builtins.int
+    SITE_FULL_FIELD_NUMBER: builtins.int
+    SITE_SECTION_FIELD_NUMBER: builtins.int
+    HEADLINE_FIELD_NUMBER: builtins.int
+    TITLE_FIELD_NUMBER: builtins.int
+    BODY_FIELD_NUMBER: builtins.int
+    TICKER_FIELD_NUMBER: builtins.int
+    TICKERS_FIELD_NUMBER: builtins.int
+    PUBLISHED_FIELD_NUMBER: builtins.int
+    LANGUAGE_FIELD_NUMBER: builtins.int
+    API_KEY_FIELD_NUMBER: builtins.int
+    guid: builtins.str
+    url: builtins.str
+    site: builtins.str
+    site_full: builtins.str
+    site_section: builtins.str
+    headline: builtins.str
+    title: builtins.str
+    body: builtins.str
+    ticker: builtins.str
     @property
-    def metadata(self) -> processing.v1alpha1.document_pb2.DocMetadata:
-        """specified metadata"""
+    def tickers(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
+    published: builtins.str
+    language: builtins.str
+    api_key: builtins.str
     def __init__(
         self,
         *,
-        platform: processing.v1alpha1.document_pb2.Platform.ValueType = ...,
-        payload: builtins.bytes = ...,
-        metadata: processing.v1alpha1.document_pb2.DocMetadata | None = ...,
+        guid: builtins.str = ...,
+        url: builtins.str = ...,
+        site: builtins.str = ...,
+        site_full: builtins.str = ...,
+        site_section: builtins.str = ...,
+        headline: builtins.str = ...,
+        title: builtins.str = ...,
+        body: builtins.str = ...,
+        ticker: builtins.str | None = ...,
+        tickers: collections.abc.Iterable[builtins.str] | None = ...,
+        published: builtins.str = ...,
+        language: builtins.str = ...,
+        api_key: builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["metadata", b"metadata"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["metadata", b"metadata", "payload", b"payload", "platform", b"platform"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_ticker", b"_ticker", "ticker", b"ticker"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_ticker", b"_ticker", "api_key", b"api_key", "body", b"body", "guid", b"guid", "headline", b"headline", "language", b"language", "published", b"published", "site", b"site", "site_full", b"site_full", "site_section", b"site_section", "ticker", b"ticker", "tickers", b"tickers", "title", b"title", "url", b"url"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["_ticker", b"_ticker"]) -> typing_extensions.Literal["ticker"] | None: ...
 
 global___IngestDocumentRequest = IngestDocumentRequest
 
 class IngestDocumentResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    ID_FIELD_NUMBER: builtins.int
-    id: builtins.str
-    """unique identifier for external reference"""
+    DOCUMENT_FIELD_NUMBER: builtins.int
+    @property
+    def document(self) -> processing.v1alpha1.document_pb2.Document: ...
     def __init__(
         self,
         *,
-        id: builtins.str = ...,
+        document: processing.v1alpha1.document_pb2.Document | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["id", b"id"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["document", b"document"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["document", b"document"]) -> None: ...
 
 global___IngestDocumentResponse = IngestDocumentResponse
+
+class ListDocumentsRequest(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    LIMIT_FIELD_NUMBER: builtins.int
+    OFFSET_FIELD_NUMBER: builtins.int
+    limit: builtins.int
+    offset: builtins.int
+    def __init__(
+        self,
+        *,
+        limit: builtins.int = ...,
+        offset: builtins.int = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["limit", b"limit", "offset", b"offset"]) -> None: ...
+
+global___ListDocumentsRequest = ListDocumentsRequest
+
+class ListDocumentsResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    DOCUMENTS_FIELD_NUMBER: builtins.int
+    @property
+    def documents(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[processing.v1alpha1.document_pb2.Document]: ...
+    def __init__(
+        self,
+        *,
+        documents: collections.abc.Iterable[processing.v1alpha1.document_pb2.Document] | None = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["documents", b"documents"]) -> None: ...
+
+global___ListDocumentsResponse = ListDocumentsResponse

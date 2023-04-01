@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type IngestionServiceClient interface {
 	// Ingest a new data object for processing
 	IngestDocument(ctx context.Context, in *IngestDocumentRequest, opts ...grpc.CallOption) (*IngestDocumentResponse, error)
+	ListDocuments(ctx context.Context, in *ListDocumentsRequest, opts ...grpc.CallOption) (*ListDocumentsResponse, error)
 }
 
 type ingestionServiceClient struct {
@@ -39,12 +40,22 @@ func (c *ingestionServiceClient) IngestDocument(ctx context.Context, in *IngestD
 	return out, nil
 }
 
+func (c *ingestionServiceClient) ListDocuments(ctx context.Context, in *ListDocumentsRequest, opts ...grpc.CallOption) (*ListDocumentsResponse, error) {
+	out := new(ListDocumentsResponse)
+	err := c.cc.Invoke(ctx, "/processing.v1alpha1.IngestionService/ListDocuments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IngestionServiceServer is the server API for IngestionService service.
 // All implementations should embed UnimplementedIngestionServiceServer
 // for forward compatibility
 type IngestionServiceServer interface {
 	// Ingest a new data object for processing
 	IngestDocument(context.Context, *IngestDocumentRequest) (*IngestDocumentResponse, error)
+	ListDocuments(context.Context, *ListDocumentsRequest) (*ListDocumentsResponse, error)
 }
 
 // UnimplementedIngestionServiceServer should be embedded to have forward compatible implementations.
@@ -53,6 +64,9 @@ type UnimplementedIngestionServiceServer struct {
 
 func (UnimplementedIngestionServiceServer) IngestDocument(context.Context, *IngestDocumentRequest) (*IngestDocumentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IngestDocument not implemented")
+}
+func (UnimplementedIngestionServiceServer) ListDocuments(context.Context, *ListDocumentsRequest) (*ListDocumentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDocuments not implemented")
 }
 
 // UnsafeIngestionServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -84,6 +98,24 @@ func _IngestionService_IngestDocument_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IngestionService_ListDocuments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDocumentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IngestionServiceServer).ListDocuments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/processing.v1alpha1.IngestionService/ListDocuments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IngestionServiceServer).ListDocuments(ctx, req.(*ListDocumentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IngestionService_ServiceDesc is the grpc.ServiceDesc for IngestionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var IngestionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IngestDocument",
 			Handler:    _IngestionService_IngestDocument_Handler,
+		},
+		{
+			MethodName: "ListDocuments",
+			Handler:    _IngestionService_ListDocuments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
