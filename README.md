@@ -1,4 +1,4 @@
-# simple_sedge (monorepo)
+# simple_sedge (WIP)
 dbdocs hosted here: https://dbdocs.io/jst2702/simple_sedge (password: `secret`)
 
 
