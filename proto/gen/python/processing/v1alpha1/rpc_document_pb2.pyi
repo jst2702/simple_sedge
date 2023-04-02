@@ -7,6 +7,7 @@ import collections.abc
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
+import google.protobuf.timestamp_pb2
 import processing.v1alpha1.document_pb2
 import sys
 
@@ -30,7 +31,7 @@ class IngestDocumentRequest(google.protobuf.message.Message):
     BODY_FIELD_NUMBER: builtins.int
     TICKER_FIELD_NUMBER: builtins.int
     TICKERS_FIELD_NUMBER: builtins.int
-    PUBLISHED_FIELD_NUMBER: builtins.int
+    PUBLISHED_AT_FIELD_NUMBER: builtins.int
     LANGUAGE_FIELD_NUMBER: builtins.int
     API_KEY_FIELD_NUMBER: builtins.int
     guid: builtins.str
@@ -44,7 +45,8 @@ class IngestDocumentRequest(google.protobuf.message.Message):
     ticker: builtins.str
     @property
     def tickers(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]: ...
-    published: builtins.str
+    @property
+    def published_at(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     language: builtins.str
     api_key: builtins.str
     def __init__(
@@ -60,12 +62,12 @@ class IngestDocumentRequest(google.protobuf.message.Message):
         body: builtins.str = ...,
         ticker: builtins.str | None = ...,
         tickers: collections.abc.Iterable[builtins.str] | None = ...,
-        published: builtins.str = ...,
+        published_at: google.protobuf.timestamp_pb2.Timestamp | None = ...,
         language: builtins.str = ...,
         api_key: builtins.str = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["_ticker", b"_ticker", "ticker", b"ticker"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["_ticker", b"_ticker", "api_key", b"api_key", "body", b"body", "guid", b"guid", "headline", b"headline", "language", b"language", "published", b"published", "site", b"site", "site_full", b"site_full", "site_section", b"site_section", "ticker", b"ticker", "tickers", b"tickers", "title", b"title", "url", b"url"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["_ticker", b"_ticker", "published_at", b"published_at", "ticker", b"ticker"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["_ticker", b"_ticker", "api_key", b"api_key", "body", b"body", "guid", b"guid", "headline", b"headline", "language", b"language", "published_at", b"published_at", "site", b"site", "site_full", b"site_full", "site_section", b"site_section", "ticker", b"ticker", "tickers", b"tickers", "title", b"title", "url", b"url"]) -> None: ...
     def WhichOneof(self, oneof_group: typing_extensions.Literal["_ticker", b"_ticker"]) -> typing_extensions.Literal["ticker"] | None: ...
 
 global___IngestDocumentRequest = IngestDocumentRequest
@@ -89,17 +91,17 @@ global___IngestDocumentResponse = IngestDocumentResponse
 class ListDocumentsRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    LIMIT_FIELD_NUMBER: builtins.int
-    OFFSET_FIELD_NUMBER: builtins.int
-    limit: builtins.int
-    offset: builtins.int
+    PAGEID_FIELD_NUMBER: builtins.int
+    PAGESIZE_FIELD_NUMBER: builtins.int
+    pageID: builtins.int
+    pageSize: builtins.int
     def __init__(
         self,
         *,
-        limit: builtins.int = ...,
-        offset: builtins.int = ...,
+        pageID: builtins.int = ...,
+        pageSize: builtins.int = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["limit", b"limit", "offset", b"offset"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["pageID", b"pageID", "pageSize", b"pageSize"]) -> None: ...
 
 global___ListDocumentsRequest = ListDocumentsRequest
 

@@ -68,14 +68,14 @@
         },
         "parameters": [
           {
-            "name": "limit",
+            "name": "pageID",
             "in": "query",
             "required": false,
             "type": "integer",
             "format": "int32"
           },
           {
-            "name": "offset",
+            "name": "pageSize",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -197,7 +197,8 @@
           }
         },
         "published": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "language": {
           "type": "string"

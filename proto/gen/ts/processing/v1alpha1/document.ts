@@ -12,7 +12,7 @@ export interface Document {
   headline: string;
   title: string;
   body: string;
-  ticker?: string | undefined;
+  ticker: string;
   tickers: string[];
   published: string;
   language: string;
@@ -28,7 +28,7 @@ function createBaseDocument(): Document {
     headline: "",
     title: "",
     body: "",
-    ticker: undefined,
+    ticker: "",
     tickers: [],
     published: "",
     language: "",
@@ -61,7 +61,7 @@ export const Document = {
     if (message.body !== "") {
       writer.uint32(66).string(message.body);
     }
-    if (message.ticker !== undefined) {
+    if (message.ticker !== "") {
       writer.uint32(74).string(message.ticker);
     }
     for (const v of message.tickers) {
@@ -137,7 +137,7 @@ export const Document = {
       headline: isSet(object.headline) ? String(object.headline) : "",
       title: isSet(object.title) ? String(object.title) : "",
       body: isSet(object.body) ? String(object.body) : "",
-      ticker: isSet(object.ticker) ? String(object.ticker) : undefined,
+      ticker: isSet(object.ticker) ? String(object.ticker) : "",
       tickers: Array.isArray(object?.ticker) ? object.ticker.map((e: any) => String(e)) : [],
       published: isSet(object.published) ? String(object.published) : "",
       language: isSet(object.language) ? String(object.language) : "",
@@ -175,7 +175,7 @@ export const Document = {
     message.headline = object.headline ?? "";
     message.title = object.title ?? "";
     message.body = object.body ?? "";
-    message.ticker = object.ticker ?? undefined;
+    message.ticker = object.ticker ?? "";
     message.tickers = object.tickers?.map((e) => e) || [];
     message.published = object.published ?? "";
     message.language = object.language ?? "";

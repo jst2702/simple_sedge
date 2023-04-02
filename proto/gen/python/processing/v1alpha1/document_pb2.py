@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"processing/v1alpha1/document.proto\x12\x13processing.v1alpha1\"\xc7\x02\n\x08\x44ocument\x12\x12\n\x04guid\x18\x01 \x01(\tR\x04guid\x12\x10\n\x03url\x18\x02 \x01(\tR\x03url\x12\x12\n\x04site\x18\x03 \x01(\tR\x04site\x12\x1c\n\tsite_full\x18\x04 \x01(\tR\tsite_full\x12\"\n\x0csite_section\x18\x05 \x01(\tR\x0csite_section\x12\x1a\n\x08headline\x18\x06 \x01(\tR\x08headline\x12\x14\n\x05title\x18\x07 \x01(\tR\x05title\x12\x12\n\x04\x62ody\x18\x08 \x01(\tR\x04\x62ody\x12\x1b\n\x06ticker\x18\t \x01(\tH\x00R\x06ticker\x88\x01\x01\x12\x17\n\x07tickers\x18\n \x03(\tR\x06ticker\x12\x1c\n\tpublished\x18\x0b \x01(\tR\tpublished\x12\x1a\n\x08language\x18\x0c \x01(\tR\x08languageB\t\n\x07_tickerB\x95\x01\n\x17\x63om.processing.v1alpha1B\rDocumentProtoP\x01\xa2\x02\x03PXX\xaa\x02\x13Processing.V1alpha1\xca\x02\x13Processing\\V1alpha1\xe2\x02\x1fProcessing\\V1alpha1\\GPBMetadata\xea\x02\x14Processing::V1alpha1b\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\"processing/v1alpha1/document.proto\x12\x13processing.v1alpha1\"\xb7\x02\n\x08\x44ocument\x12\x12\n\x04guid\x18\x01 \x01(\tR\x04guid\x12\x10\n\x03url\x18\x02 \x01(\tR\x03url\x12\x12\n\x04site\x18\x03 \x01(\tR\x04site\x12\x1c\n\tsite_full\x18\x04 \x01(\tR\tsite_full\x12\"\n\x0csite_section\x18\x05 \x01(\tR\x0csite_section\x12\x1a\n\x08headline\x18\x06 \x01(\tR\x08headline\x12\x14\n\x05title\x18\x07 \x01(\tR\x05title\x12\x12\n\x04\x62ody\x18\x08 \x01(\tR\x04\x62ody\x12\x16\n\x06ticker\x18\t \x01(\tR\x06ticker\x12\x17\n\x07tickers\x18\n \x03(\tR\x06ticker\x12\x1c\n\tpublished\x18\x0b \x01(\tR\tpublished\x12\x1a\n\x08language\x18\x0c \x01(\tR\x08languageB\x95\x01\n\x17\x63om.processing.v1alpha1B\rDocumentProtoP\x01\xa2\x02\x03PXX\xaa\x02\x13Processing.V1alpha1\xca\x02\x13Processing\\V1alpha1\xe2\x02\x1fProcessing\\V1alpha1\\GPBMetadata\xea\x02\x14Processing::V1alpha1b\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'processing.v1alpha1.document_pb2', globals())
@@ -22,5 +22,5 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'\n\027com.processing.v1alpha1B\rDocumentProtoP\001\242\002\003PXX\252\002\023Processing.V1alpha1\312\002\023Processing\\V1alpha1\342\002\037Processing\\V1alpha1\\GPBMetadata\352\002\024Processing::V1alpha1'
   _DOCUMENT._serialized_start=60
-  _DOCUMENT._serialized_end=387
+  _DOCUMENT._serialized_end=371
 # @@protoc_insertion_point(module_scope)

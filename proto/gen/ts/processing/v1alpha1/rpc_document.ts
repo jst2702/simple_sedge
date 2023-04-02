@@ -1,5 +1,6 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
+import { Timestamp } from "../../google/protobuf/timestamp";
 import { Document } from "./document";
 
 export const protobufPackage = "processing.v1alpha1";
@@ -15,7 +16,7 @@ export interface IngestDocumentRequest {
   body: string;
   ticker?: string | undefined;
   tickers: string[];
-  published: string;
+  publishedAt: string | undefined;
   language: string;
   apiKey: string;
 }
@@ -25,8 +26,8 @@ export interface IngestDocumentResponse {
 }
 
 export interface ListDocumentsRequest {
-  limit: number;
-  offset: number;
+  pageID: number;
+  pageSize: number;
 }
 
 export interface ListDocumentsResponse {
@@ -45,7 +46,7 @@ function createBaseIngestDocumentRequest(): IngestDocumentRequest {
     body: "",
     ticker: undefined,
     tickers: [],
-    published: "",
+    publishedAt: undefined,
     language: "",
     apiKey: "",
   };
@@ -83,8 +84,8 @@ export const IngestDocumentRequest = {
     for (const v of message.tickers) {
       writer.uint32(82).string(v!);
     }
-    if (message.published !== "") {
-      writer.uint32(90).string(message.published);
+    if (message.publishedAt !== undefined) {
+      Timestamp.encode(toTimestamp(message.publishedAt), writer.uint32(90).fork()).ldelim();
     }
     if (message.language !== "") {
       writer.uint32(98).string(message.language);
@@ -133,7 +134,7 @@ export const IngestDocumentRequest = {
           message.tickers.push(reader.string());
           break;
         case 11:
-          message.published = reader.string();
+          message.publishedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           break;
         case 12:
           message.language = reader.string();
@@ -161,7 +162,7 @@ export const IngestDocumentRequest = {
       body: isSet(object.body) ? String(object.body) : "",
       ticker: isSet(object.ticker) ? String(object.ticker) : undefined,
       tickers: Array.isArray(object?.ticker) ? object.ticker.map((e: any) => String(e)) : [],
-      published: isSet(object.published) ? String(object.published) : "",
+      publishedAt: isSet(object.published) ? String(object.published) : undefined,
       language: isSet(object.language) ? String(object.language) : "",
       apiKey: isSet(object.api_key) ? String(object.api_key) : "",
     };
@@ -183,7 +184,7 @@ export const IngestDocumentRequest = {
     } else {
       obj.ticker = [];
     }
-    message.published !== undefined && (obj.published = message.published);
+    message.publishedAt !== undefined && (obj.published = message.publishedAt);
     message.language !== undefined && (obj.language = message.language);
     message.apiKey !== undefined && (obj.api_key = message.apiKey);
     return obj;
@@ -201,7 +202,7 @@ export const IngestDocumentRequest = {
     message.body = object.body ?? "";
     message.ticker = object.ticker ?? undefined;
     message.tickers = object.tickers?.map((e) => e) || [];
-    message.published = object.published ?? "";
+    message.publishedAt = object.publishedAt ?? undefined;
     message.language = object.language ?? "";
     message.apiKey = object.apiKey ?? "";
     return message;
@@ -258,16 +259,16 @@ export const IngestDocumentResponse = {
 };
 
 function createBaseListDocumentsRequest(): ListDocumentsRequest {
-  return { limit: 0, offset: 0 };
+  return { pageID: 0, pageSize: 0 };
 }
 
 export const ListDocumentsRequest = {
   encode(message: ListDocumentsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.limit !== 0) {
-      writer.uint32(8).int32(message.limit);
+    if (message.pageID !== 0) {
+      writer.uint32(8).int32(message.pageID);
     }
-    if (message.offset !== 0) {
-      writer.uint32(16).int32(message.offset);
+    if (message.pageSize !== 0) {
+      writer.uint32(16).int32(message.pageSize);
     }
     return writer;
   },
@@ -280,10 +281,10 @@ export const ListDocumentsRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.limit = reader.int32();
+          message.pageID = reader.int32();
           break;
         case 2:
-          message.offset = reader.int32();
+          message.pageSize = reader.int32();
           break;
         default:
           reader.skipType(tag & 7);
@@ -295,22 +296,22 @@ export const ListDocumentsRequest = {
 
   fromJSON(object: any): ListDocumentsRequest {
     return {
-      limit: isSet(object.limit) ? Number(object.limit) : 0,
-      offset: isSet(object.offset) ? Number(object.offset) : 0,
+      pageID: isSet(object.pageID) ? Number(object.pageID) : 0,
+      pageSize: isSet(object.pageSize) ? Number(object.pageSize) : 0,
     };
   },
 
   toJSON(message: ListDocumentsRequest): unknown {
     const obj: any = {};
-    message.limit !== undefined && (obj.limit = Math.round(message.limit));
-    message.offset !== undefined && (obj.offset = Math.round(message.offset));
+    message.pageID !== undefined && (obj.pageID = Math.round(message.pageID));
+    message.pageSize !== undefined && (obj.pageSize = Math.round(message.pageSize));
     return obj;
   },
 
   fromPartial<I extends Exact<DeepPartial<ListDocumentsRequest>, I>>(object: I): ListDocumentsRequest {
     const message = createBaseListDocumentsRequest();
-    message.limit = object.limit ?? 0;
-    message.offset = object.offset ?? 0;
+    message.pageID = object.pageID ?? 0;
+    message.pageSize = object.pageSize ?? 0;
     return message;
   },
 };
@@ -378,6 +379,19 @@ export type DeepPartial<T> = T extends Builtin ? T
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 export type Exact<P, I extends P> = P extends Builtin ? P
   : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function toTimestamp(dateStr: string): Timestamp {
+  const date = new Date(dateStr);
+  const seconds = date.getTime() / 1_000;
+  const nanos = (date.getTime() % 1_000) * 1_000_000;
+  return { seconds, nanos };
+}
+
+function fromTimestamp(t: Timestamp): string {
+  let millis = t.seconds * 1_000;
+  millis += t.nanos / 1_000_000;
+  return new Date(millis).toISOString();
+}
 
 function isSet(value: any): boolean {
   return value !== null && value !== undefined;

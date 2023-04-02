@@ -11,6 +11,10 @@ var (
 	isValidUsername = regexp.MustCompile(`^[A-Za-z0-9_]+$`).MatchString
 )
 
+var (
+	isValidTicker = regexp.MustCompile(`^[A-Z.]+$`).MatchString
+)
+
 func ValidateString(value string, minLength int, maxLength int) error {
 	n := len(value)
 	if n < minLength || n > maxLength {
@@ -53,4 +57,31 @@ func ValidateEmailId(value int64) error {
 
 func ValidateSecretCode(value string) error {
 	return ValidateString(value, 32, 128)
+}
+
+func ValidatePageID(value int32) error {
+	if value < 1 {
+		return fmt.Errorf("must be >= 1")
+	}
+	return nil
+}
+
+func ValidatePageSize(value int32) error {
+	if value < 1 || value > 10 {
+		return fmt.Errorf("val must be between (1 and 10)")
+	}
+	return nil
+}
+
+func ValidateTicker(value string, allow_empty bool) error {
+	if value == "" {
+		if allow_empty {
+			return nil
+		}
+		return fmt.Errorf("ticker string was empty")
+	}
+	if !isValidTicker(value) {
+		return fmt.Errorf("must contain only uppercase letters or a period")
+	}
+	return nil
 }
