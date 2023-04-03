@@ -16,13 +16,9 @@ func (server *Server) IngestDocument(
 	ctx context.Context,
 	req *ppb.IngestDocumentRequest,
 ) (*ppb.IngestDocumentResponse, error) {
-	apiKey, err := server.store.GetApiKey(ctx, req.GetApiKey())
+	apiKey, err := server.authorizeApiKey(ctx, req.ApiKey)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return nil, unauthenticatedError(err)
-		} else {
-			return nil, status.Errorf(codes.Internal, "failed to retrieve api key %s", err)
-		}
+		return nil, unauthenticatedError(err)
 	}
 
 	violations := validateIngestDocumentRequest(req)

@@ -2,10 +2,12 @@ package gapi
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"strings"
 
 	"google.golang.org/grpc/metadata"
+	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/gokit/token"
 )
 
@@ -45,4 +47,18 @@ func (server *Server) authorizeUser(ctx context.Context) (*token.Payload, error)
 
 	return payload, nil
 
+}
+
+func (server *Server) authorizeApiKey(ctx context.Context, keyString string) (db.ApiKey, error) {
+	apiKey, err := server.store.GetApiKey(ctx, keyString)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return apiKey, fmt.Errorf("api key not found")
+		} else {
+			return apiKey, fmt.Errorf("failed to retrieve api key: %w", err)
+		}
+	} else if !apiKey.Active {
+		return apiKey, fmt.Errorf("inactive api key")
+	}
+	return apiKey, nil
 }
