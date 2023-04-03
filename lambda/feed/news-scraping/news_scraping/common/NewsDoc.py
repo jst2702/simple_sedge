@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Union
+from typing import List
 
 @dataclass
 class NewsDoc:
@@ -12,7 +12,8 @@ class NewsDoc:
     headline: str
     title: str
     body: str
-    ticker: Union[None, str, List[str]]
+    ticker: str
+    tickers: List[str]
     published_str: str
     published_date: datetime
     language: str

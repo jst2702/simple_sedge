@@ -9,5 +9,9 @@
 			"--proto_path=${env.GOPATH}/src",
 			"--proto_path=proto"
 		]
-	}
+	},
+	"go.testFlags": [
+		"-v",
+		"-count=1"
+	]
 }

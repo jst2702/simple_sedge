@@ -25,7 +25,7 @@ func (server *Server) VerifyEmail(
 		SecretCode: req.GetSecretCode(),
 	})
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to verify email: %w", err)
+		return nil, status.Errorf(codes.Internal, "failed to verify email: %s", err)
 	}
 
 	rsp := &pb.VerifyEmailResponse{
