@@ -1,5 +1,5 @@
 syntax = "proto3";
-package processing.v1alpha1;
+package processing;
 import "processing/v1alpha1/rpc_document.proto";
 import "google/api/annotations.proto"; //Ignore error. buf has file.
 

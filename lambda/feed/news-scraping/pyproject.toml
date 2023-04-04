@@ -4,17 +4,20 @@ version = "0.1.0"
 description = ""
 authors = ["jst2702 <jst2702@vt.edu>"]
 readme = "README.md"
-packages = [{include = "news_scraping"}]
+packages = [
+    {include = "news_scraping"}
+]
 
 [tool.poetry.dependencies]
+simplesedge-sdk = {path = "../../../sdk"}
 python = "^3.9"
-bs4 = "^0.0.1"
 requests = "^2.28.2"
 selenium = "^4.8.0"
 webdriver-manager = "^3.8.5"
 langdetect = "^1.0.9"
 python-dotenv = "^0.21.1"
 protobuf = "^4.22.1"
+beautifulsoup4 = "^4.12.0"
 
 
 [build-system]

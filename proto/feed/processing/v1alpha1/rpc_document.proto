@@ -1,5 +1,5 @@
 syntax = "proto3";
-package processing.v1alpha1;
+package processing;
 import "processing/v1alpha1/document.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -13,7 +13,7 @@ message IngestDocumentRequest {
     string title = 7 [ json_name = "title" ];
     string body = 8 [ json_name = "body" ];
     optional string ticker = 9 [ json_name = "ticker" ];
-    repeated string tickers = 10 [ json_name = "ticker" ];
+    repeated string tickers = 10 [ json_name = "tickers" ];
     google.protobuf.Timestamp published_at = 11 [ json_name = "published" ];
     string language = 12 [ json_name = "language" ];
     string api_key = 13 [ json_name = "api_key" ];

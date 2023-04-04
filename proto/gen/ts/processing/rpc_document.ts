@@ -1,6 +1,6 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { Timestamp } from "../../google/protobuf/timestamp";
+import { Timestamp } from "../google/protobuf/timestamp";
 import { Document } from "./document";
 
 export const protobufPackage = "processing";
@@ -161,7 +161,7 @@ export const IngestDocumentRequest = {
       title: isSet(object.title) ? String(object.title) : "",
       body: isSet(object.body) ? String(object.body) : "",
       ticker: isSet(object.ticker) ? String(object.ticker) : undefined,
-      tickers: Array.isArray(object?.tickers) ? object.tickers.map((e: any) => String(e)) : [],
+      tickers: Array.isArray(object?.ticker) ? object.ticker.map((e: any) => String(e)) : [],
       publishedAt: isSet(object.published) ? String(object.published) : undefined,
       language: isSet(object.language) ? String(object.language) : "",
       apiKey: isSet(object.api_key) ? String(object.api_key) : "",
@@ -180,9 +180,9 @@ export const IngestDocumentRequest = {
     message.body !== undefined && (obj.body = message.body);
     message.ticker !== undefined && (obj.ticker = message.ticker);
     if (message.tickers) {
-      obj.tickers = message.tickers.map((e) => e);
+      obj.ticker = message.tickers.map((e) => e);
     } else {
-      obj.tickers = [];
+      obj.ticker = [];
     }
     message.publishedAt !== undefined && (obj.published = message.publishedAt);
     message.language !== undefined && (obj.language = message.language);

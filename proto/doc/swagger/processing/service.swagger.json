@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "processing/v1alpha1/service.proto",
+    "title": "processing/service.proto",
     "version": "version not set"
   },
   "tags": [
@@ -119,7 +119,7 @@
         "ticker": {
           "type": "string"
         },
-        "tickers": {
+        "ticker": {
           "type": "array",
           "items": {
             "type": "string"
@@ -163,7 +163,7 @@
         "ticker": {
           "type": "string"
         },
-        "tickers": {
+        "ticker": {
           "type": "array",
           "items": {
             "type": "string"

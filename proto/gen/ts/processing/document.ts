@@ -138,7 +138,7 @@ export const Document = {
       title: isSet(object.title) ? String(object.title) : "",
       body: isSet(object.body) ? String(object.body) : "",
       ticker: isSet(object.ticker) ? String(object.ticker) : "",
-      tickers: Array.isArray(object?.tickers) ? object.tickers.map((e: any) => String(e)) : [],
+      tickers: Array.isArray(object?.ticker) ? object.ticker.map((e: any) => String(e)) : [],
       published: isSet(object.published) ? String(object.published) : "",
       language: isSet(object.language) ? String(object.language) : "",
     };
@@ -156,9 +156,9 @@ export const Document = {
     message.body !== undefined && (obj.body = message.body);
     message.ticker !== undefined && (obj.ticker = message.ticker);
     if (message.tickers) {
-      obj.tickers = message.tickers.map((e) => e);
+      obj.ticker = message.tickers.map((e) => e);
     } else {
-      obj.tickers = [];
+      obj.ticker = [];
     }
     message.published !== undefined && (obj.published = message.published);
     message.language !== undefined && (obj.language = message.language);

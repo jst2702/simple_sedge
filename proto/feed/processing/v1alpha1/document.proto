@@ -1,5 +1,5 @@
 syntax = "proto3";
-package processing.v1alpha1;
+package processing;
 
 message Document {
     string guid = 1 [ json_name = "guid" ];
@@ -11,7 +11,7 @@ message Document {
     string title = 7 [ json_name = "title" ];
     string body = 8 [ json_name = "body" ];
     string ticker = 9 [ json_name = "ticker" ];
-    repeated string tickers = 10 [ json_name = "ticker" ];
+    repeated string tickers = 10 [ json_name = "tickers" ];
     string published = 11 [ json_name = "published" ];
     string language = 12 [ json_name = "language" ];
 };
