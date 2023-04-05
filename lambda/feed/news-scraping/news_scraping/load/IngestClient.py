@@ -1,6 +1,6 @@
 from __future__ import annotations
-from processing.v1alpha1.rpc_document_pb2 import IngestDocumentRequest
-from processing.v1alpha1.rpc_document_pb2 import IngestDocumentResponse
+from apis.v1alpha1.rpc_document_pb2 import (
+    IngestDocumentRequest, IngestDocumentResponse)
 from google.protobuf.timestamp_pb2 import Timestamp
 from google.protobuf.json_format import MessageToDict, ParseDict
 from news_scraping.common import NewsDoc
@@ -13,7 +13,7 @@ class IngestClient:
         self.server_addr = server_addr
         self.api_key = api_key
         self._timestamp = Timestamp()
-        self._endpoint = f"{self.server_addr}//processing/v1alpha1/ingest_document"
+        self._endpoint = f"{self.server_addr}/v1alpha1/processing/ingest_document"
 
     def ingest_doc(self, doc: NewsDoc) -> IngestDocumentResponse:
         req = IngestDocumentRequest(
@@ -34,7 +34,11 @@ class IngestClient:
         dict_payload = MessageToDict(req)
         resp = requests.post(self._endpoint, json=dict_payload)
         # Add error handling
-        return ParseDict(resp.json(), IngestDocumentResponse())
+        return ParseDict(
+            js_dict=resp.json(), 
+            message=IngestDocumentResponse(), 
+            ignore_unknown_fields=True
+        )
 
     @classmethod
     def from_default(cls, path = '.env') -> IngestClient:

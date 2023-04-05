@@ -1,0 +1,231 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "processing/service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "IngestionService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/processing/v1alpha1/ingest_document": {
+      "post": {
+        "summary": "Ingest a new data object for processing",
+        "operationId": "IngestionService_IngestDocument",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/processingIngestDocumentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/processingIngestDocumentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IngestionService"
+        ]
+      }
+    },
+    "/v1alpha1/list_documents": {
+      "get": {
+        "operationId": "IngestionService_ListDocuments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/processingListDocumentsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pageID",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "IngestionService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "processingDocument": {
+      "type": "object",
+      "properties": {
+        "guid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "published": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "processingIngestDocumentRequest": {
+      "type": "object",
+      "properties": {
+        "guid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "string"
+        },
+        "ticker": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "published": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "language": {
+          "type": "string"
+        },
+        "api_key": {
+          "type": "string"
+        }
+      }
+    },
+    "processingIngestDocumentResponse": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "$ref": "#/definitions/processingDocument"
+        }
+      }
+    },
+    "processingListDocumentsResponse": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/processingDocument"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

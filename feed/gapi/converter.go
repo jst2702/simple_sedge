@@ -3,8 +3,7 @@ package gapi
 import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"simplesedge.com/feed/pkg/db"
-	ppb "simplesedge.com/proto/gen/go/processing/v1alpha1"
-	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
+	pb "simplesedge.com/proto/gen/go/apis/v1alpha1"
 )
 
 func convertUser(user db.User) *pb.User {
@@ -16,8 +15,8 @@ func convertUser(user db.User) *pb.User {
 	}
 }
 
-func convertDocument(doc db.Document) *ppb.Document {
-	return &ppb.Document{
+func convertDocument(doc db.Document) *pb.Document {
+	return &pb.Document{
 		Guid:        doc.Guid,
 		Url:         doc.Url,
 		Site:        doc.Site,
@@ -26,17 +25,16 @@ func convertDocument(doc db.Document) *ppb.Document {
 		Headline:    doc.Headline,
 		Title:       doc.Title,
 		Body:        doc.Body,
-		Ticker:      doc.Ticker.String,
 		Tickers:     doc.Tickers,
 		Language:    doc.Language.String,
 	}
 }
 
-func convertDocuments(docs []db.Document) []*ppb.Document {
-	ppb_docs := []*ppb.Document{}
+func convertDocuments(docs []db.Document) []*pb.Document {
+	pb_docs := []*pb.Document{}
 	for _, doc := range docs {
-		ppb_doc := convertDocument(doc)
-		ppb_docs = append(ppb_docs, ppb_doc)
+		pb_doc := convertDocument(doc)
+		pb_docs = append(pb_docs, pb_doc)
 	}
-	return ppb_docs
+	return pb_docs
 }

@@ -7,7 +7,7 @@ import (
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/feed/worker"
 	"simplesedge.com/gokit/token"
-	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
+	pb "simplesedge.com/proto/gen/go/apis/v1alpha1"
 )
 
 // serves all gRPC requests for our feed service

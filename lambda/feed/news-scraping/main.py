@@ -6,4 +6,4 @@ def main():
     scrape_rss(client)
 
 if __name__ == '__main__':
-    pass
+    main()

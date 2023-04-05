@@ -23,7 +23,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1alpha1CreateUserResponse"
+              "$ref": "#/definitions/webapisCreateUserResponse"
             }
           },
           "default": {
@@ -39,8 +39,46 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1alpha1CreateUserRequest"
+              "$ref": "#/definitions/webapisCreateUserRequest"
             }
+          }
+        ],
+        "tags": [
+          "SimpleSedge"
+        ]
+      }
+    },
+    "/v1alpha1/list_documents": {
+      "get": {
+        "operationId": "SimpleSedge_ListDocuments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/webapisListDocumentsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pageID",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -55,7 +93,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1alpha1LoginUserResponse"
+              "$ref": "#/definitions/webapisLoginUserResponse"
             }
           },
           "default": {
@@ -71,7 +109,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1alpha1LoginUserRequest"
+              "$ref": "#/definitions/webapisLoginUserRequest"
             }
           }
         ],
@@ -87,7 +125,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1alpha1UpdateUserResponse"
+              "$ref": "#/definitions/webapisUpdateUserResponse"
             }
           },
           "default": {
@@ -103,7 +141,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1alpha1UpdateUserRequest"
+              "$ref": "#/definitions/webapisUpdateUserRequest"
             }
           }
         ],
@@ -119,7 +157,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1alpha1VerifyEmailResponse"
+              "$ref": "#/definitions/webapisVerifyEmailResponse"
             }
           },
           "default": {
@@ -178,7 +216,7 @@
         }
       }
     },
-    "v1alpha1CreateUserRequest": {
+    "webapisCreateUserRequest": {
       "type": "object",
       "properties": {
         "email": {
@@ -192,15 +230,67 @@
         }
       }
     },
-    "v1alpha1CreateUserResponse": {
+    "webapisCreateUserResponse": {
       "type": "object",
       "properties": {
         "user": {
-          "$ref": "#/definitions/v1alpha1User"
+          "$ref": "#/definitions/webapisUser"
         }
       }
     },
-    "v1alpha1LoginUserRequest": {
+    "webapisDocument": {
+      "type": "object",
+      "properties": {
+        "guid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tickers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "published": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "webapisListDocumentsResponse": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/webapisDocument"
+          }
+        }
+      }
+    },
+    "webapisLoginUserRequest": {
       "type": "object",
       "properties": {
         "username": {
@@ -211,11 +301,11 @@
         }
       }
     },
-    "v1alpha1LoginUserResponse": {
+    "webapisLoginUserResponse": {
       "type": "object",
       "properties": {
         "user": {
-          "$ref": "#/definitions/v1alpha1User"
+          "$ref": "#/definitions/webapisUser"
         },
         "sessionId": {
           "type": "string"
@@ -236,7 +326,7 @@
         }
       }
     },
-    "v1alpha1UpdateUserRequest": {
+    "webapisUpdateUserRequest": {
       "type": "object",
       "properties": {
         "username": {
@@ -250,15 +340,15 @@
         }
       }
     },
-    "v1alpha1UpdateUserResponse": {
+    "webapisUpdateUserResponse": {
       "type": "object",
       "properties": {
         "user": {
-          "$ref": "#/definitions/v1alpha1User"
+          "$ref": "#/definitions/webapisUser"
         }
       }
     },
-    "v1alpha1User": {
+    "webapisUser": {
       "type": "object",
       "properties": {
         "username": {
@@ -277,7 +367,7 @@
         }
       }
     },
-    "v1alpha1VerifyEmailResponse": {
+    "webapisVerifyEmailResponse": {
       "type": "object",
       "properties": {
         "isVerified": {

@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/processing/v1alpha1/ingest_document": {
+    "/v1alpha1/processing/ingest_document": {
       "post": {
         "summary": "Ingest a new data object for processing",
         "operationId": "IngestionService_IngestDocument",
@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1alpha1IngestDocumentResponse"
+              "$ref": "#/definitions/processingIngestDocumentResponse"
             }
           },
           "default": {
@@ -40,46 +40,8 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1alpha1IngestDocumentRequest"
+              "$ref": "#/definitions/processingIngestDocumentRequest"
             }
-          }
-        ],
-        "tags": [
-          "IngestionService"
-        ]
-      }
-    },
-    "/v1alpha1/list_documents": {
-      "get": {
-        "operationId": "IngestionService_ListDocuments",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1alpha1ListDocumentsResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "pageID",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
           }
         ],
         "tags": [
@@ -89,6 +51,100 @@
     }
   },
   "definitions": {
+    "processingDocument": {
+      "type": "object",
+      "properties": {
+        "guid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tickers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "published": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
+      }
+    },
+    "processingIngestDocumentRequest": {
+      "type": "object",
+      "properties": {
+        "guid": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "site": {
+          "type": "string"
+        },
+        "site_full": {
+          "type": "string"
+        },
+        "site_section": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "tickers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "published": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "language": {
+          "type": "string"
+        },
+        "api_key": {
+          "type": "string"
+        }
+      }
+    },
+    "processingIngestDocumentResponse": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "$ref": "#/definitions/processingDocument"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
@@ -112,117 +168,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/protobufAny"
-          }
-        }
-      }
-    },
-    "v1alpha1Document": {
-      "type": "object",
-      "properties": {
-        "guid": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "site": {
-          "type": "string"
-        },
-        "site_full": {
-          "type": "string"
-        },
-        "site_section": {
-          "type": "string"
-        },
-        "headline": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "body": {
-          "type": "string"
-        },
-        "ticker": {
-          "type": "string"
-        },
-        "ticker": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "published": {
-          "type": "string"
-        },
-        "language": {
-          "type": "string"
-        }
-      }
-    },
-    "v1alpha1IngestDocumentRequest": {
-      "type": "object",
-      "properties": {
-        "guid": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "site": {
-          "type": "string"
-        },
-        "site_full": {
-          "type": "string"
-        },
-        "site_section": {
-          "type": "string"
-        },
-        "headline": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "body": {
-          "type": "string"
-        },
-        "ticker": {
-          "type": "string"
-        },
-        "ticker": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "published": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "language": {
-          "type": "string"
-        },
-        "api_key": {
-          "type": "string"
-        }
-      }
-    },
-    "v1alpha1IngestDocumentResponse": {
-      "type": "object",
-      "properties": {
-        "document": {
-          "$ref": "#/definitions/v1alpha1Document"
-        }
-      }
-    },
-    "v1alpha1ListDocumentsResponse": {
-      "type": "object",
-      "properties": {
-        "documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1alpha1Document"
           }
         }
       }
