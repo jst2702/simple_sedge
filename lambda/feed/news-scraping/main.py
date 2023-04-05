@@ -1,4 +1,3 @@
-import sys
 from news_scraping.pipeline import scrape_rss
 from news_scraping.load import IngestClient
 

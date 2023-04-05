@@ -85,3 +85,31 @@ func ValidateTicker(value string, allow_empty bool) error {
 	}
 	return nil
 }
+
+func ValidateGuid(value string) error {
+	if value == "" {
+		return fmt.Errorf("guid was empty")
+	}
+	return nil
+}
+
+func ValidateTitle(value string) error {
+	if value == "" {
+		return fmt.Errorf("title was empty")
+	}
+	return nil
+}
+
+func ValidateSite(value string) error {
+	if value == "" {
+		return fmt.Errorf("invalid site url")
+	}
+	return nil
+}
+
+func ValidateHeadline(value string) error {
+	if value == "" {
+		return fmt.Errorf("headline was empty")
+	}
+	return nil
+}

@@ -26,7 +26,7 @@ import (
 	"simplesedge.com/feed/worker"
 	"simplesedge.com/gokit/mail"
 	kitsql "simplesedge.com/gokit/sql"
-	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
+	pb "simplesedge.com/proto/gen/go/apis/v1alpha1"
 )
 
 func main() {

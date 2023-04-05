@@ -16,7 +16,7 @@
     "application/json"
   ],
   "paths": {
-    "/processing/v1alpha1/ingest_document": {
+    "/v1alpha1/processing/ingest_document": {
       "post": {
         "summary": "Ingest a new data object for processing",
         "operationId": "IngestionService_IngestDocument",
@@ -42,44 +42,6 @@
             "schema": {
               "$ref": "#/definitions/processingIngestDocumentRequest"
             }
-          }
-        ],
-        "tags": [
-          "IngestionService"
-        ]
-      }
-    },
-    "/v1alpha1/list_documents": {
-      "get": {
-        "operationId": "IngestionService_ListDocuments",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/processingListDocumentsResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "pageID",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
           }
         ],
         "tags": [
@@ -114,9 +76,6 @@
           "type": "string"
         },
         "body": {
-          "type": "string"
-        },
-        "ticker": {
           "type": "string"
         },
         "tickers": {
@@ -160,9 +119,6 @@
         "body": {
           "type": "string"
         },
-        "ticker": {
-          "type": "string"
-        },
         "tickers": {
           "type": "array",
           "items": {
@@ -186,17 +142,6 @@
       "properties": {
         "document": {
           "$ref": "#/definitions/processingDocument"
-        }
-      }
-    },
-    "processingListDocumentsResponse": {
-      "type": "object",
-      "properties": {
-        "documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/processingDocument"
-          }
         }
       }
     },

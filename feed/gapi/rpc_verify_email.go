@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/status"
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/feed/val"
-	pb "simplesedge.com/proto/gen/go/webapis/v1alpha1"
+	pb "simplesedge.com/proto/gen/go/apis/v1alpha1"
 )
 
 func (server *Server) VerifyEmail(

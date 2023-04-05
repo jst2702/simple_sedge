@@ -9,13 +9,13 @@ import (
 	"google.golang.org/grpc/status"
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/feed/val"
-	ppb "simplesedge.com/proto/gen/go/processing/v1alpha1"
+	pb "simplesedge.com/proto/gen/go/apis/v1alpha1"
 )
 
 func (server *Server) IngestDocument(
 	ctx context.Context,
-	req *ppb.IngestDocumentRequest,
-) (*ppb.IngestDocumentResponse, error) {
+	req *pb.IngestDocumentRequest,
+) (*pb.IngestDocumentResponse, error) {
 	apiKey, err := server.authorizeApiKey(ctx, req.ApiKey)
 	if err != nil {
 		return nil, unauthenticatedError(err)
@@ -55,7 +55,7 @@ func (server *Server) IngestDocument(
 		return nil, status.Errorf(codes.Internal, "failed to create document %s", err)
 	}
 
-	rsp := &ppb.IngestDocumentResponse{
+	rsp := &pb.IngestDocumentResponse{
 		Document: convertDocument(document),
 	}
 
@@ -63,7 +63,27 @@ func (server *Server) IngestDocument(
 }
 
 func validateIngestDocumentRequest(
-	req *ppb.IngestDocumentRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+	req *pb.IngestDocumentRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+
+	if err := val.ValidateGuid(req.GetGuid()); err != nil {
+		violations = append(violations, fieldViolation("guid", err))
+	}
+
+	if err := val.ValidateTitle(req.GetTitle()); err != nil {
+		violations = append(violations, fieldViolation("title", err))
+	}
+
+	if err := val.ValidateHeadline(req.GetHeadline()); err != nil {
+		violations = append(violations, fieldViolation("headline", err))
+	}
+
+	if err := val.ValidateSite(req.GetSite()); err != nil {
+		violations = append(violations, fieldViolation("site", err))
+	}
+
+	if err := val.ValidateSite(req.GetSiteFull()); err != nil {
+		violations = append(violations, fieldViolation("site_full", err))
+	}
 
 	if req.GetTicker() != "" {
 		if err := val.ValidateTicker(req.GetTicker(), true); err != nil {

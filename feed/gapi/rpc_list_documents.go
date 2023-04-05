@@ -9,13 +9,13 @@ import (
 	"google.golang.org/grpc/status"
 	"simplesedge.com/feed/pkg/db"
 	"simplesedge.com/feed/val"
-	ppb "simplesedge.com/proto/gen/go/processing/v1alpha1"
+	pb "simplesedge.com/proto/gen/go/apis/v1alpha1"
 )
 
 func (server *Server) ListDocuments(
 	ctx context.Context,
-	req *ppb.ListDocumentsRequest,
-) (*ppb.ListDocumentsResponse, error) {
+	req *pb.ListDocumentsRequest,
+) (*pb.ListDocumentsResponse, error) {
 	_, err := server.authorizeUser(ctx)
 	if err != nil {
 		return nil, unauthenticatedError(err)
@@ -39,7 +39,7 @@ func (server *Server) ListDocuments(
 		return nil, status.Errorf(codes.Internal, "failed to retrieve documents %s", err)
 	}
 
-	rsp := &ppb.ListDocumentsResponse{
+	rsp := &pb.ListDocumentsResponse{
 		Documents: convertDocuments(documents),
 	}
 
@@ -47,7 +47,7 @@ func (server *Server) ListDocuments(
 }
 
 func validateListDocumentsRequest(
-	req *ppb.ListDocumentsRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+	req *pb.ListDocumentsRequest) (violations []*errdetails.BadRequest_FieldViolation) {
 	if err := val.ValidatePageID(req.GetPageID()); err != nil {
 		violations = append(violations, fieldViolation("pageId", err))
 	}

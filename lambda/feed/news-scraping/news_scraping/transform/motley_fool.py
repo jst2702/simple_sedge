@@ -22,7 +22,7 @@ def get_mf_news_doc(news_item: Tag) -> NewsDoc:
         headline=title,
         title=title,
         body='', # going to use an empty string for now.
-        ticker=tickers[0],
+        ticker=tickers[0] if tickers else "",
         tickers=tickers,
         published_str=get_str_comp(news_item, 'pubDate'),
         published_date=get_pub_datatime(news_item),
