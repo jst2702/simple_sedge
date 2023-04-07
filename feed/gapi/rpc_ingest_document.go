@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 
+	"github.com/lib/pq"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -52,6 +53,19 @@ func (server *Server) IngestDocument(
 
 	document, err := server.store.CreateDocument(ctx, arg)
 	if err != nil {
+		if pqErr, ok := err.(*pq.Error); ok {
+			switch pqErr.Code.Name() {
+			case "foreign_key_violation", "unique_violation":
+				document, err := server.store.GetDocument(ctx, document.Guid)
+				if err != nil {
+					rsp := &pb.IngestDocumentResponse{
+						Document: convertDocument(document),
+					}
+					return rsp, nil
+				}
+				return nil, status.Errorf(codes.Internal, "failed to create document %s", err)
+			}
+		}
 		return nil, status.Errorf(codes.Internal, "failed to create document %s", err)
 	}
 
