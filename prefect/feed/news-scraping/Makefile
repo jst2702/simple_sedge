@@ -10,6 +10,7 @@ login:
 
 deploy:
 	py39 scrape-dep.py
+	make agent
 
 agent:
 	prefect agent start -p 'default-agent-pool'
