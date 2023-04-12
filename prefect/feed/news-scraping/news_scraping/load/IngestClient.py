@@ -41,16 +41,16 @@ class IngestClient:
         )
 
     @classmethod
-    def from_default(cls, path = '.env') -> IngestClient:
+    def from_default(cls, path = 'app.env') -> IngestClient:
         load_dotenv(path)
 
         server_addir = os.getenv('FEED_HTTP_SERVER_ADDRESS')
         if not server_addir:
             raise ValueError("FEED_HTTP_SERVER_ADDRESS not set")
         
-        api_key = os.getenv('API_KEY')
+        api_key = os.getenv('FEED_API_KEY')
         if not api_key:
-            raise ValueError("API_KEY not set")
+            raise ValueError("FEED_API_KEY not set")
 
         return cls(
             server_addr=server_addir, 

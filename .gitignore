@@ -132,3 +132,4 @@ dmypy.json
 *vendor/
 
 app.env
+.prefectignore
